@@ -1,0 +1,497 @@
+Home Work 1
+Развернуть две виртуальные машины(кто еще не сделал, можно последовательно)
+- Ubuntu
+- Centos
+1. Произвести минимальную настройку (время, локаль, custom motd)
+
+Настройка времени Ubuntu
+
+Используем команду для изменения часового пояса на свой timedatectl, с выбором часового пояса Europe/Minsk
+
+denis@denis-VBox:~$ sudo timedatectl set-timezone Europe/Minsk
+denis@denis-VBox:~$ date
+Fri Jun 30 07:02:34 PM +03 2023
+
+Далее выводим отчет с помощью команды timedatectl
+denis@denis-VBox:~$ timedatectl
+               Local time: Fri 2023-06-30 19:03:06 +03
+           Universal time: Fri 2023-06-30 16:03:06 UTC
+                 RTC time: Fri 2023-06-30 16:03:07
+                Time zone: Europe/Minsk (+03, +0300)
+System clock synchronized: yes
+              NTP service: inactive
+          RTC in local TZ: no
+
+Настройка локали
+denis@denis-VBox:~$ sudo locale-gen ru_RU.UTF-8
+Generating locales (this might take a while)...
+  ru_RU.UTF-8... done
+Generation complete.
+denis@denis-VBox:~$ sudo update-locale LANG=en_US.UTF-8 LC_TIME="ru_RU.UTF-8"
+
+Далее нужно перелогинится или перезугрузится , написанно в источники
+Вывод команды locale
+denis@denis-VBox:~$ locale
+LANG=en_US.UTF-8
+LANGUAGE=
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC=en_US.UTF-8
+LC_TIME=en_US.UTF-8
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY=en_US.UTF-8
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER=en_US.UTF-8
+LC_NAME=en_US.UTF-8
+LC_ADDRESS=en_US.UTF-8
+LC_TELEPHONE=en_US.UTF-8
+LC_MEASUREMENT=en_US.UTF-8
+LC_IDENTIFICATION=en_US.UTF-8
+LC_ALL=
+
+
+
+2. Определить точную версию ядра.
+denis@denis-VBox:~$ uname -a
+Linux denis-VBox 5.19.0-46-generic #47~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Jun 21 15:35:31 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+3. Вывести список модулей ядра и записать в файл
+denis@denis-VBox:~/Desktop$ lsmod > lsmod.txt
+denis@denis-VBox:~/Desktop$ cat lsmod.txt
+Module                  Size  Used by
+tls                   118784  0
+vboxsf                 36864  1
+vboxvideo              32768  0
+drm_vram_helper        24576  1 vboxvideo
+binfmt_misc            24576  1
+snd_intel8x0           49152  2
+intel_rapl_msr         20480  0
+nls_iso8859_1          16384  1
+snd_ac97_codec        176128  1 snd_intel8x0
+ac97_bus               16384  1 snd_ac97_codec
+snd_pcm               159744  2 snd_intel8x0,snd_ac97_codec
+intel_rapl_common      40960  1 intel_rapl_msr
+snd_seq_midi           20480  0
+joydev                 32768  0
+….
+
+4. Просмотреть информацию о процессоре и модулях оперативной памяти
+denis@denis-VBox:~$ lscpu
+Architecture:            x86_64
+  CPU op-mode(s):        32-bit, 64-bit
+  Address sizes:         46 bits physical, 48 bits virtual
+  Byte Order:            Little Endian
+CPU(s):                  4
+  On-line CPU(s) list:   0-3
+Vendor ID:               GenuineIntel
+  Model name:            Intel(R) Xeon(R) CPU E5-2650 v3 @ 2.30GHz
+    CPU family:          6
+    Model:               63
+    Thread(s) per core:  1
+    Core(s) per socket:  4
+    Socket(s):           1
+    Stepping:            2
+    BogoMIPS:            4589.37
+denis@denis-VBox:~$  sudo lshw -class memory
+[sudo] password for denis:
+Sorry, try again.
+[sudo] password for denis:
+  *-firmware                
+       description: BIOS
+       vendor: innotek GmbH
+       physical id: 0
+       version: VirtualBox
+       date: 12/01/2006
+       size: 128KiB
+       capacity: 128KiB
+       capabilities: isa pci cdboot bootselect int9keyboard int10video acpi
+  *-memory
+       description: System memory
+       physical id: 1
+       size: 4GiB
+denis@denis-VBox:~$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.8Gi       2.1Gi       213Mi        59Mi       1.5Gi       1.4Gi
+Swap:          3.1Gi        30Mi       3.1Gi
+
+5. Получить информацию о жестком диске
+denis@denis-VBox:~$ sudo lshw -class disk
+  *-disk                    
+       description: ATA Disk
+       product: VBOX HARDDISK
+       vendor: VirtualBox
+       physical id: 0.0.0
+       bus info: scsi@2:0.0.0
+       logical name: /dev/sda
+       version: 1.0
+       serial: VB29eab12b-04dfc0fc
+       size: 30GiB (32GB)
+       capabilities: gpt-1.00 partitioned partitioned:gpt
+       configuration: ansiversion=5 guid=0cf5b3be-920a-42ae-b12b-54a8cb107a36 logicalsectorsize=512 sectorsize=512
+
+6. Добавить в виртуальную машину второй сетевой интерфейс (вывести информацию о нем в виртуалках)
+
+denis@denis-VBox:~$ ifconfig
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::3770:7fcf:fe31:7a23  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:05:9f:8c  txqueuelen 1000  (Ethernet)
+        RX packets 346542  bytes 496093578 (496.0 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 105288  bytes 9379291 (9.3 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp0s8: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.56.105  netmask 255.255.255.0  broadcast 192.168.56.255
+        inet6 fe80::aa8c:ce8:daf0:33c0  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:42:46:c6  txqueuelen 1000  (Ethernet)
+        RX packets 98  bytes 16931 (16.9 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 168  bytes 19776 (19.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+7.  Узнать полную информацию об использованной и неиспользованной памяти
+denis@denis-VBox:~$ free -h
+
+                      total         used           free        shared    buff/cache  available
+Mem:           3.8Gi       960Mi       1.4Gi        34Mi       1.4Gi          2.6Gi
+Swap:          3.1Gi          0B           3.1Gi
+
+
+denis@denis-VBox:~$ cat /proc/meminfo
+
+MemTotal:        4004872 kB
+MemFree:         1261780 kB
+MemAvailable:    2774776 kB
+Buffers:           55024 kB
+Cached:          1644324 kB
+SwapCached:      0 kB
+Active:           523204 kB
+Inactive:        1937420 kB
+8. Создать пользователя new_admin_user, Настроить ssh доступ пользователю по ключу на VM, запретить ему авторизацию по паролю
+ 1. сменил пользователя на root , так как свои пользователем не мог создать пользователя
+root@denis-VBox:/home/denis# adduser new_admin_user
+Adding user `new_admin_user' ...
+Adding new group `new_admin_user' (1001) ...
+Adding new user `new_admin_user' (1001) with group `new_admin_user' ...
+Creating home directory `/home/new_admin_user' ...
+Copying files from `/etc/skel' ...
+New password: 
+new_admin_user@denis-VBox:~$ pwd
+/home/new_admin_user
+2. Настроить ssh доступ пользователю по ключу на VM, запретить ему авторизацию по паролю
+Не осилил 
+
+9. Вывести список файловых систем, которые поддерживаются ядром
+denis@denis-VBox:~$ ls /proc/sys/kernel/
+
+acct                                   perf_event_max_stack
+
+acpi_video_flags                       perf_event_mlock_kb
+
+apparmor_display_secid_mode            perf_event_paranoid
+
+apparmor_restrict_unprivileged_userns  pid_max
+
+auto_msgmni                            poweroff_cmd
+
+bootloader_type                        print-fatal-signals
+
+bootloader_version                     printk
+
+bpf_stats_enabled                      printk_delay
+
+cad_pid                                printk_devkmsg
+
+cap_last_cap                           printk_ratelimit
+
+core_pattern                           printk_ratelimit_burst
+
+core_pipe_limit                        pty
+
+core_uses_pid                          random
+
+ctrl-alt-del                           randomize_va_space
+
+dmesg_restrict                         real-root-dev
+
+domainname                             sched_autogroup_enabled
+
+firmware_config                        sched_cfs_bandwidth_slice_us
+
+ftrace_dump_on_oops                    sched_child_runs_first
+
+ftrace_enabled                         sched_deadline_period_max_us
+
+hardlockup_all_cpu_backtrace           sched_deadline_period_min_us
+
+hardlockup_panic                       sched_energy_aware
+
+hostname                               sched_rr_timeslice_ms
+
+hotplug                                sched_rt_period_us
+
+hung_task_all_cpu_backtrace            sched_rt_runtime_us
+
+hung_task_check_count                  sched_schedstats
+
+hung_task_check_interval_secs          sched_util_clamp_max
+
+hung_task_panic                        sched_util_clamp_min
+
+hung_task_timeout_secs                 sched_util_clamp_min_rt_default
+
+hung_task_warnings                     seccomp
+
+io_delay_type                          sem
+
+kexec_load_disabled                    sem_next_id
+
+keys                                   shmall
+
+kptr_restrict                          shmmax
+
+max_lock_depth                         shmmni
+
+max_rcu_stall_to_panic                 shm_next_id
+
+modprobe                               shm_rmid_forced
+
+modules_disabled                       softlockup_all_cpu_backtrace
+
+msgmax                                 softlockup_panic
+
+msgmnb                                 soft_watchdog
+
+msgmni                                 split_lock_mitigate
+
+msg_next_id                            stack_tracer_enabled
+
+ngroups_max                            sysctl_writes_strict
+
+nmi_watchdog                           sysrq
+
+ns_last_pid                            tainted
+
+numa_balancing                         task_delayacct
+
+oops_all_cpu_backtrace                 threads-max
+
+oops_limit                             timer_migration
+
+osrelease                              traceoff_on_warning
+
+ostype                                 tracepoint_printk
+
+overflowgid                            unknown_nmi_panic
+
+overflowuid                            unprivileged_bpf_disabled
+
+panic                                  unprivileged_userns_apparmor_policy
+
+panic_on_io_nmi                        unprivileged_userns_clone
+
+panic_on_oops                          usermodehelper
+
+panic_on_rcu_stall                     version
+
+panic_on_unrecovered_nmi               warn_limit
+
+panic_on_warn                          watchdog
+
+panic_print                            watchdog_cpumask
+
+perf_cpu_time_max_percent              watchdog_thresh
+
+perf_event_max_contexts_per_stack      yama
+
+perf_event_max_sample_rate
+
+
+1. Произвести минимальную настройку (время, локаль, custom motd) для CentOS
+Время
+[denis@localhost ~]$ timedatectl
+      Local time: Пн 2023-07-03 20:57:52 +03
+  Universal time: Пн 2023-07-03 17:57:52 UTC
+        RTC time: Пн 2023-07-03 17:57:51
+       Time zone: Europe/Minsk (+03, +0300)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: n/a
+[denis@localhost ~]$ date
+Пн июл  3 20:58:00 +03 2023
+[denis@localhost ~]$
+
+Локаль
+[denis@localhost ~]$ localectl
+   System Locale: LANG=ru_RU.UTF-8
+       VC Keymap: us
+      X11 Layout: us
+
+2. Определить точную версию ядра.
+[denis@localhost ~]$ uname -a
+Linux localhost.localdomain 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+3. Вывести список модулей ядра и записать в файл
+[denis@localhost ~]$ lsmod > module
+[denis@localhost ~]$ cat module
+Module                  Size  Used by
+sb_edac                32114  0
+iosf_mbi               15582  0
+crc32_pclmul           13133  0
+snd_intel8x0           38199  0
+snd_ac97_codec        130479  1 snd_intel8x0
+ghash_clmulni_intel    13273  0
+ac97_bus               12730  1 snd_ac97_codec
+snd_seq                62774  0
+snd_seq_device         14356  1 snd_seq
+…
+4. Просмотреть информацию о процессоре и модулях оперативной памяти
+[denis@localhost ~]$ lscpu
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                2
+On-line CPU(s) list:   0,1
+Thread(s) per core:    1
+Core(s) per socket:    2
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 63
+Model name:            Intel(R) Xeon(R) CPU E5-2650 v3 @ 2.30GHz
+Stepping:              2
+CPU MHz:               2294.688
+BogoMIPS:              4589.37
+Hypervisor vendor:     KVM
+Virtualization type:   full
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              25600K
+NUMA node0 CPU(s):     0,1
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc eagerfpu pni pclmulqdq ssse3 cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm invpcid_single fsgsbase bmi1 avx2 bmi2 invpcid md_clear flush_l1d
+
+Оперативная память
+[denis@localhost ~]$ lshw -class memory
+WARNING: you should run this program as super-user.
+  *-memory
+       description: System memory
+       physical id: 0
+       size: 4GiB
+
+5. Получить информацию о жестком диске
+[denis@localhost ~]$ lshw -class disk
+WARNING: you should run this program as super-user.
+  *-cdrom
+       description: DVD reader
+       product: CD-ROM
+       vendor: VBOX
+       physical id: 0.0.0
+       bus info: scsi@1:0.0.0
+       logical name: /dev/cdrom
+       logical name: /dev/sr0
+       version: 1.0
+       capabilities: removable audio dvd
+       configuration: ansiversion=5 status=nodisc
+
+[denis@localhost ~]$ df -h
+Файловая система        Размер Использовано  Дост Использовано% Cмонтировано в
+devtmpfs                  1,9G            0  1,9G            0% /dev
+tmpfs                     1,9G            0  1,9G            0% /dev/shm
+tmpfs                     1,9G         8,7M  1,9G            1% /run
+tmpfs                     1,9G            0  1,9G            0% /sys/fs/cgroup
+/dev/mapper/centos-root    26G         1,6G   25G            7% /
+/dev/sda1                1014M         150M  865M           15% /boot
+tmpfs                     379M            0  379M            0% /run/user/1000
+tmpfs                     379M            0  379M            0% /run/user/0
+
+6. Добавить в виртуальную машину второй сетевой интерфейс (вывести информацию о нем в виртуалках)
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:f4:ce:af brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute dynamic enp0s3
+       valid_lft 85126sec preferred_lft 85126sec
+    inet6 fe80::89d6:3cbc:b57d:65c9/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+3: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:22:05:0b brd ff:ff:ff:ff:ff:ff
+    inet 192.168.31.228/24 brd 192.168.31.255 scope global noprefixroute dynamic enp0s8
+       valid_lft 41927sec preferred_lft 41927sec
+    inet6 fe80::ffa4:d123:4d48:8d2/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+
+
+7.  Узнать полную информацию об использованной и неиспользованной памяти
+[denis@localhost ~]$ free -h
+                      total        used        free       shared    buff/cache   available
+Mem:           3,7G        223M     3,4G        8,6M        130M        3,3G
+Swap:          3,0G          0B        3,0G
+
+
+[denis@localhost ~]$ cat /proc/meminfo
+MemTotal:        3880248 kB
+MemFree:         3518464 kB
+MemAvailable:    3462436 kB
+Buffers:            2108 kB
+Cached:           115024 kB
+SwapCached:            0 kB
+Active:            81552 kB
+8. Создать пользователя new_admin_user, Настроить ssh доступ пользователю по ключу на VM, запретить ему авторизацию по паролю
+ 1. сменил пользователя на root , так как свои пользователем не мог создать пользователя
+[denis@localhost ~]$ su -
+Пароль:
+[root@localhost ~]# sudo useradd new_admon_user
+[root@localhost ~]# cd ..
+[root@localhost /]# cd /home/
+[root@localhost home]# ls
+denis  new_admon_user
+[root@localhost ~]# passwd new_admon_user
+2. Настроить ssh доступ пользователю по ключу на VM, запретить ему авторизацию по паролю
+Не осилил 
+
+9. Вывести список файловых систем, которые поддерживаются ядром
+[denis@localhost ~]$ ls /proc/sys
+abi  crypto  debug  dev  fs  kernel  net  user  vm
+[denis@localhost ~]$ ls /proc/sys/kernel/
+acct                          ns_last_pid                        sched_migration_cost_ns
+acpi_video_flags              numa_balancing                     sched_min_granularity_ns
+auto_msgmni                   numa_balancing_scan_delay_ms       sched_nr_migrate
+bootloader_type               numa_balancing_scan_period_max_ms  sched_rr_timeslice_ms
+bootloader_version            numa_balancing_scan_period_min_ms  sched_rt_period_us
+cad_pid                       numa_balancing_scan_size_mb        sched_rt_runtime_us
+cap_last_cap                  numa_balancing_settle_count        sched_schedstats
+compat-log                    osrelease                          sched_shares_window_ns
+core_pattern                  ostype                             sched_time_avg_ms
+core_pipe_limit               overflowgid                        sched_tunable_scaling
+core_uses_pid                 overflowuid                        sched_wakeup_granularity_ns
+ctrl-alt-del                  panic                              seccomp
+dmesg_restrict                panic_on_io_nmi                    sem
+domainname                    panic_on_oops                      sem_next_id
+ftrace_dump_on_oops           panic_on_stackoverflow             shmall
+ftrace_enabled                panic_on_unrecovered_nmi           shmmax
+hardlockup_all_cpu_backtrace  panic_on_warn                      shmmni
+hardlockup_panic              perf_cpu_time_max_percent          shm_next_id
+hostname                      perf_event_max_sample_rate         shm_rmid_forced
+hotplug                       perf_event_mlock_kb                softlockup_all_cpu_backtrace
+hung_task_check_count         perf_event_paranoid                softlockup_panic
+hung_task_panic               pid_max                            stack_tracer_enabled
+hung_task_timeout_secs        poweroff_cmd                       sysctl_writes_strict
+hung_task_warnings            print-fatal-signals                sysrq
+io_delay_type                 printk                             tainted
+kexec_load_disabled           printk_delay                       threads-max
+keys                          printk_ratelimit                   timer_migration
+kptr_restrict                 printk_ratelimit_burst             traceoff_on_warning
+max_lock_depth                pty                                unknown_nmi_panic
+modprobe                      random                             usermodehelper
+modules_disabled              randomize_va_space                 version
+msgmax                        real-root-dev                      watchdog
+msgmnb                        sched_autogroup_enabled            watchdog_cpumask
+msgmni                        sched_cfs_bandwidth_slice_us       watchdog_thresh
+msg_next_id                   sched_child_runs_first             yama
+ngroups_max                   sched_domain
+nmi_watchdog                  sched_latency_ns
