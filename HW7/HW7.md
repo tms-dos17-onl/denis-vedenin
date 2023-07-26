@@ -30,7 +30,11 @@ Date:   Wed Jul 26 21:38:14 2023 +0300
 :
 ```
 
+<<<<<<< HEAD
 # 4. Создать пустой файл README.md и сделать коммит.
+=======
+#4. Создать пустой файл README.md и сделать коммит.
+>>>>>>> 2d8b726 (Создание пустого файла README.md)
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> echo >  README.md
 
@@ -46,6 +50,7 @@ Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
 -a----        26.07.2023     21:57           1093 HW7.md
 -a----        26.07.2023     22:10              0 README.md
+<<<<<<< HEAD
 ```
 # 5. Добавить фразу "Hello, DevOps" в README.md файл и сделать коммит.
 ```
@@ -97,4 +102,6 @@ Date:   Wed Jul 26 22:14:09 2023 +0300
 ```
 PS C:\Users\Денис DevOps\denis-vedenin\HW7> git reset --hard HEAD~3
 HEAD is now at fd7f450 Revert "Добавление фразы 'Hello,DEvOps'в README.md файл"q
+=======
+>>>>>>> 2d8b726 (Создание пустого файла README.md)
 ```
