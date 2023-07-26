@@ -47,19 +47,3 @@ Mode                 LastWriteTime         Length Name
 -a----        26.07.2023     21:57           1093 HW7.md
 -a----        26.07.2023     22:10              0 README.md
 ```
-#5. Добавить фразу "Hello, DevOps" в README.md файл и сделать коммит.
-```
-PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> echo "Hello,DevOps" > .\README.md
-Каталог: C:\Users\Ирка Pipirka\denis-vedenin\HW7> ls
-
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----        26.07.2023     22:12           1748 HW7.md
--a----        26.07.2023     22:15             30 README.md
-
-
-PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> cat .\README.md
-Hello,DevOps
-PS C:\Users\Ирка Pipirka\denis-vedenin\HW7>
-```
