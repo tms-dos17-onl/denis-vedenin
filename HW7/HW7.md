@@ -29,3 +29,21 @@ Date:   Wed Jul 26 21:38:14 2023 +0300
 
 :
 ```
+
+#4. Создать пустой файл README.md и сделать коммит.
+```
+PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> echo >  README.md
+
+Командлет Write-Output в конвейере команд в позиции 1
+Укажите значения для следующих параметров:
+InputObject[0]:
+
+
+    Каталог: C:\Users\Ирка Pipirka\denis-vedenin\HW7
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        26.07.2023     21:57           1093 HW7.md
+-a----        26.07.2023     22:10              0 README.md
+```
