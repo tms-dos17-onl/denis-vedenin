@@ -154,3 +154,18 @@ Your branch is up to date with 'origin/main'.
 PS C:\Users\Денис DevOps\denis-vedenin\HW7> git branch       
 * main
 ```
+
+# 11. Скопировать файл https://github.com/tms-dos17-onl/_sandbox/blob/main/.github/workflows/validate-shell.yaml , положить его по таким же относительному пути в репозиторий. Создать коммит и запушить его в удаленный репозиторий.
+
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> mkdir .github
+
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> mkdir ./.github/workflows
+
+
+    Каталог: C:\Users\Денис DevOps\denis-vedenin\HW7\.github
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        31.07.2023     23:11                workflows
+```
