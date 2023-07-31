@@ -144,3 +144,13 @@ Date:   Wed Jul 26 23:45:01 2023 +0300
     This reverts commit 42fb47d25e50f13b3f9aeefc56a86386d594ee18.
 
 ```
+
+#  10. Переключиться на ветку mainили master. Если ветка называетсяmaster, то переименовать её в main.
+
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git checkout main
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git branch       
+* main
+```
