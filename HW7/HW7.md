@@ -1,18 +1,18 @@
-#1. Вывести список всех удаленных репозиториев для локального.
+# 1. Вывести список всех удаленных репозиториев для локального.
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin> git remote -v
 origin  https://github.com/tms-dos17-onl/denis-vedenin.git (fetch)
 origin  https://github.com/tms-dos17-onl/denis-vedenin.git (push) 
 ```
 
-#2. Вывести список всех веток.
+# 2. Вывести список всех веток.
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin> git branch -a
 * main
 remotes/origin/HEAD -> origin/main
 sremotes/origin/main
 ```
-#3. Вывести последниe 3 коммитa с помощью git log.
+# 3. Вывести последниe 3 коммитa с помощью git log.
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin> git log -3    
 commit d986eb1d5b016919988ee70057195d3cfd5004dd (HEAD -> main)
@@ -30,7 +30,7 @@ Date:   Wed Jul 26 21:38:14 2023 +0300
 :
 ```
 
-#4. Создать пустой файл README.md и сделать коммит.
+# 4. Создать пустой файл README.md и сделать коммит.
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> echo >  README.md
 
@@ -47,7 +47,7 @@ Mode                 LastWriteTime         Length Name
 -a----        26.07.2023     21:57           1093 HW7.md
 -a----        26.07.2023     22:10              0 README.md
 ```
-#5. Добавить фразу "Hello, DevOps" в README.md файл и сделать коммит.
+# 5. Добавить фразу "Hello, DevOps" в README.md файл и сделать коммит.
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> echo "Hello,DevOps" > .\README.md
 Каталог: C:\Users\Ирка Pipirka\denis-vedenin\HW7> ls
@@ -63,7 +63,7 @@ PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> cat .\README.md
 Hello,DevOps
 PS C:\Users\Ирка Pipirka\denis-vedenin\HW7>
 ```
-#6. Сделать реверт последнего коммита. Вывести последниe 3 коммитa с помощью git log.
+# 6. Сделать реверт последнего коммита. Вывести последниe 3 коммитa с помощью git log.
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> git revert 6e77063a51f53e6544d8cbdef17b4ee3b34fc606
 [main fd7f450] Revert "Добавление фразы 'Hello,DEvOps'в README.md файл"
@@ -91,4 +91,54 @@ Author: Denis Vedenin <denved98@mail.ru>
 Date:   Wed Jul 26 22:14:09 2023 +0300
 
     Создание пустого файла README.md
+```
+
+# 7. Удалить последние 3 коммита с помощью git reset.
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git reset --hard HEAD~3
+HEAD is now at fd7f450 Revert "Добавление фразы 'Hello,DEvOps'в README.md файл"q
+```
+
+# 8. Вернуть коммит, где создается пустой файл README.md. Для этого нужно найти ID коммита в git reflog, а затем сделать cherry-pick.
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git reflog
+166233f (HEAD -> main, origin/main, origin/HEAD) HEAD@{0}: commit: git reset --hard HEAD~3
+6308227 HEAD@{1}: pull: Fast-forward
+fd7f450 HEAD@{2}: reset: moving to HEAD~3
+6308227 HEAD@{3}: clone: from https://github.com/tms-dos17-onl/denis-vedenin.git
+```
+
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git cherry-pick 2d8b726
+error: your local changes would be overwritten by cherry-pick.
+hint: commit your changes or stash them to proceed.
+fatal: cherry-pick failed
+
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git cherry-pick --continue
+[main 6fd3e0b] Создание пустого файла README.md
+ Author: Denis Vedenin <denved98@mail.ru>
+ Date: Wed Jul 26 22:14:09 2023 +0300
+ 1 file changed, 7 insertions(+)
+
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git log
+commit 6fd3e0b64735931ac7b46d71336d9bc9f0fff7f3 (HEAD -> main)
+Author: Denis Vedenin <denved98@mail.ru>
+Date:   Wed Jul 26 22:14:09 2023 +0300
+
+    Создание пустого файла README.md
+```
+
+# 9. Удалить последний коммит с помощью git reset.
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git reset HEAD~1       
+Unstaged changes after reset:
+M       HW7/HW7.md
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git log
+commit 6308227231bc492b0af9324bed0935a1e1c479bd (HEAD -> main)
+Author: Denis Vedenin <denved98@mail.ru>
+Date:   Wed Jul 26 23:45:01 2023 +0300
+
+    Revert "Изменение текста в файле"
+
+    This reverts commit 42fb47d25e50f13b3f9aeefc56a86386d594ee18.
 ```
