@@ -126,6 +126,7 @@ Author: Denis Vedenin <denved98@mail.ru>
 Date:   Wed Jul 26 22:14:09 2023 +0300
 
     Создание пустого файла README.md
+<<<<<<< HEAD
 ```
 
 # 9. Удалить последний коммит с помощью git reset.
@@ -141,4 +142,5 @@ Date:   Wed Jul 26 23:45:01 2023 +0300
     Revert "Изменение текста в файле"
 
     This reverts commit 42fb47d25e50f13b3f9aeefc56a86386d594ee18.
+
 ```
