@@ -30,11 +30,7 @@ Date:   Wed Jul 26 21:38:14 2023 +0300
 :
 ```
 
-<<<<<<< HEAD
 # 4. Создать пустой файл README.md и сделать коммит.
-=======
-#4. Создать пустой файл README.md и сделать коммит.
->>>>>>> 2d8b726 (Создание пустого файла README.md)
 ```
 PS C:\Users\Ирка Pipirka\denis-vedenin\HW7> echo >  README.md
 
@@ -50,7 +46,6 @@ Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
 -a----        26.07.2023     21:57           1093 HW7.md
 -a----        26.07.2023     22:10              0 README.md
-<<<<<<< HEAD
 ```
 # 5. Добавить фразу "Hello, DevOps" в README.md файл и сделать коммит.
 ```
@@ -102,6 +97,33 @@ Date:   Wed Jul 26 22:14:09 2023 +0300
 ```
 PS C:\Users\Денис DevOps\denis-vedenin\HW7> git reset --hard HEAD~3
 HEAD is now at fd7f450 Revert "Добавление фразы 'Hello,DEvOps'в README.md файл"q
-=======
->>>>>>> 2d8b726 (Создание пустого файла README.md)
+```
+
+# 8. Вернуть коммит, где создается пустой файл README.md. Для этого нужно найти ID коммита в git reflog, а затем сделать cherry-pick.
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git reflog
+166233f (HEAD -> main, origin/main, origin/HEAD) HEAD@{0}: commit: git reset --hard HEAD~3
+6308227 HEAD@{1}: pull: Fast-forward
+fd7f450 HEAD@{2}: reset: moving to HEAD~3
+6308227 HEAD@{3}: clone: from https://github.com/tms-dos17-onl/denis-vedenin.git
+```
+
+```
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git cherry-pick 2d8b726
+error: your local changes would be overwritten by cherry-pick.
+hint: commit your changes or stash them to proceed.
+fatal: cherry-pick failed
+
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git cherry-pick --continue
+[main 6fd3e0b] Создание пустого файла README.md
+ Author: Denis Vedenin <denved98@mail.ru>
+ Date: Wed Jul 26 22:14:09 2023 +0300
+ 1 file changed, 7 insertions(+)
+
+PS C:\Users\Денис DevOps\denis-vedenin\HW7> git log
+commit 6fd3e0b64735931ac7b46d71336d9bc9f0fff7f3 (HEAD -> main)
+Author: Denis Vedenin <denved98@mail.ru>
+Date:   Wed Jul 26 22:14:09 2023 +0300
+
+    Создание пустого файла README.md
 ```
