@@ -272,27 +272,33 @@ Your branch is up to date with 'origin/main'.
 $ touch LICENSE
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
-$ curl -O  https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt > LICENSE
+$ touch LICENSE.txt
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ curl -O https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt > LICENSE.txt
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current                                 Dload  Upload   Total   Spent    Left  Speed
-100  6655  100  6655    0     0  17192      0 --:--:-- --:--:-- --:--:-- 17285
+100  6656  100  6656    0     0  15313      0 --:--:-- --:--:-- --:--:-- 15371 
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
 $ git add .
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
-$ git status 
+$ git status
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   HW7.md
-        new file:   LICENSE
-        new file:   MIT-LICENSE.txt
+        renamed:    LICENSE -> LICENSE.txt
+        modified:   MIT-LICENSE.txt
 
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
-$ git commit -m "Add file LICENSE.md in  branch main"
+$ git commit -m "Change 14 task"
+[main dca26ec] Change 14 task
+ 3 files changed, 19 insertions(+), 1 deletion(-)
+ rename HW7/{LICENSE => LICENSE.txt} (100%)
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
 $ git log -3
