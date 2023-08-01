@@ -169,3 +169,75 @@ Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
 d-----        31.07.2023     23:11                workflows
 ```
+
+# 12. Создать из ветки main ветку develop. Переключиться на неё и создать README.md в корне репозитория. Написать в этом файле какие инструменты DevOps вам знакомы и с какими вы бы хотели познакомиться больше всего (2-3 пункта).
+
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git branch 
+  develop
+* main
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ nano README.md
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ cat README.md 
+Хочу стать DevOps с полного нуля 
+............................
+Хочу знать
+CI/CD
+Ansible
+AWS
+Apache
+Docker
+Kubernetes
+............................
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git commit -m "Add file README.md and new branch develop"
+[develop a87b176] Add file README.md and new branch develop
+ 2 files changed, 39 insertions(+)
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git push origin develop
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 1011 bytes | 1011.00 KiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/tms-dos17-onl/denis-vedenin.git
+   1534688..a87b176  develop -> develop
+```
+# 13. Создайте из ветки mainветку supportи создайте там файл LICENSEс содержимым https://www.apache.org/licenses/LICENSE-2.0.txt . Создать коммит. Вывести последние 3 коммита.
+
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git branch support
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git checkout support
+Switched to branch 'support'
+M       HW7/HW7.md
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (support)
+$ touch LICENSE.md
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (support)
+$ curl -O https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt > LICENSE.md
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed    
+100  6656  100  6656    0     0  14788      0 --:--:-- --:--:-- --:--:-- 14857
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (support)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (support)
+$ git commit -m "Add file LICENSE.md and new branch support"
+```
