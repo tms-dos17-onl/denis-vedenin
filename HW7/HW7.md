@@ -240,4 +240,22 @@ $ git add .
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (support)
 $ git commit -m "Add file LICENSE.md and new branch support"
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (support)
+$ git log -3
+commit 6bc21a2769d7ad6571b46c7103db2bc5fad7830d (HEAD -> support)
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Tue Aug 1 22:42:13 2023 +0300
+
+    Add file LICENSE.md and new branch support
+
+commit 15346889336178c521de89f6c2ebb695a4baf5e8 (origin/main, origin/HEAD, main) 
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Mon Jul 31 23:15:04 2023 +0300
+
+    Add validate-shell.yaml
+
+commit 0aa5b782be5df717789ad771a0dbe1537d63d9fb
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Mon Jul 31 17:32:26 2023 +0300
 ```
