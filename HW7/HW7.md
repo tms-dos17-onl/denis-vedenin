@@ -197,4 +197,21 @@ Apache
 Docker
 Kubernetes
 ............................
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git commit -m "Add file README.md and new branch develop"
+[develop a87b176] Add file README.md and new branch develop
+ 2 files changed, 39 insertions(+)
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git push origin develop
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 1011 bytes | 1011.00 KiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/tms-dos17-onl/denis-vedenin.git
+   1534688..a87b176  develop -> develop
 ```
