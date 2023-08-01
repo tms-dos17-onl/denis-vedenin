@@ -169,3 +169,32 @@ Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
 d-----        31.07.2023     23:11                workflows
 ```
+
+# 12. Создать из ветки main ветку develop. Переключиться на неё и создать README.md в корне репозитория. Написать в этом файле какие инструменты DevOps вам знакомы и с какими вы бы хотели познакомиться больше всего (2-3 пункта).
+
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git branch 
+  develop
+* main
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ nano README.md
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ cat README.md 
+Хочу стать DevOps с полного нуля 
+............................
+Хочу знать
+CI/CD
+Ansible
+AWS
+Apache
+Docker
+Kubernetes
+............................
+```
