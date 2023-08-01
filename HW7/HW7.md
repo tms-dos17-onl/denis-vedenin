@@ -293,4 +293,22 @@ Changes to be committed:
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
 $ git commit -m "Add file LICENSE.md in  branch main"
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git log -3
+commit a8109811b8d094948bc601ba7b2b26ccef4210ab (HEAD -> main, origin/main, origin/HEAD)
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Tue Aug 1 23:27:05 2023 +0300
+
+    Add file LICENSE.md in branch main
+
+commit 15346889336178c521de89f6c2ebb695a4baf5e8
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Mon Jul 31 23:15:04 2023 +0300
+
+    Add validate-shell.yaml
+
+commit 0aa5b782be5df717789ad771a0dbe1537d63d9fb
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Mon Jul 31 17:32:26 2023 +0300
 ```
