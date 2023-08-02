@@ -322,7 +322,73 @@ Date:   Mon Jul 31 17:32:26 2023 +0300
 # 15. Сделать слияние ветки supportв ветку mainи решить конфликты выбора пути выбора только одной лицензии.
 
 ```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git merge support
+Auto-merging HW7/HW7.md
+CONFLICT (content): Merge conflict in HW7/HW7.md
+Automatic merge failed; fix conflicts and then commit the result.
 
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main|MERGING)
+$ git mergetool
+
+This message is displayed because 'merge.tool' is not configured.
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse diffmerge ecmerge p4merge araxis bc codecompare smerge emerge vimdiff nvimdiff
+Merging:
+HW7/HW7.md
+
+Normal merge conflict for 'HW7/HW7.md':
+  {local}: modified file
+  {remote}: modified file
+Hit return to start merge resolution tool (vimdiff):
+4 files to edit
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main|MERGING)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+        modified:   HW7.md
+        new file:   LICENSE-2.0.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        HW7.md.orig
+
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main|MERGING)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main|MERGING)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+        modified:   HW7.md
+        new file:   HW7.md.orig
+        new file:   LICENSE-2.0.txt
+
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main|MERGING)
+$ git commit -m "merge branch support in main"
+[main 7954728] merge branch support in main
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 4 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
 =======
 >>>>>>> support
 ```
