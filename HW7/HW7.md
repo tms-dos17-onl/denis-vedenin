@@ -529,3 +529,23 @@ nothing to commit, working tree clean
 $ git rebase --continue
 Successfully rebased and updated refs/heads/develop.
 ```
+
+# 17. Вывести историю последних 10 коммитов в виде графа с помощью команды git log -10 --oneline --graph.
+
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git log -10 --oneline --graph
+* 7da0fd6 (HEAD -> main, origin/main, origin/HEAD) 16 task done
+* 11a34f1 Add HW7_16
+*   7954728 merge branch support in main
+|\
+| * 4716de9 (origin/support, support) Update LICENSE-2.0.txt
+| * 20f7d2c Add file LICENSE.md and new branch support v2
+| * 6bc21a2 Add file LICENSE.md and new branch support
+* | 57355c8 Add HW7_15
+* |   4486248 Merge branch 'main' of https://github.com/tms-dos17-onl/denis-vedenin        
+|\ \  
+| * | d0b488b Update LICENSE.txt
+* | | 9b54720 Change 14 task v2
+|/ /
+```
