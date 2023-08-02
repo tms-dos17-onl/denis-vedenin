@@ -197,6 +197,7 @@ Apache
 Docker
 Kubernetes
 ............................
+<<<<<<< HEAD
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
 $ git commit -m "Add file README.md and new branch develop"
@@ -391,4 +392,6 @@ Your branch is ahead of 'origin/main' by 4 commits.
 nothing to commit, working tree clean
 =======
 >>>>>>> support
+=======
+>>>>>>> a87b176 (Add file README.md and new branch develop)
 ```
