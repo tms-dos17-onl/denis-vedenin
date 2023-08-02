@@ -549,3 +549,75 @@ $ git log -10 --oneline --graph
 * | | 9b54720 Change 14 task v2
 |/ /
 ```
+
+# 18. Запушить ветку develop. В истории коммитов должен быть мерж support -> main.
+
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git checkout develop
+Switched to branch 'develop'
+Your branch and 'origin/develop' have diverged,
+and have 13 and 2 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git status
+On branch develop
+Your branch and 'origin/develop' have diverged,
+and have 13 and 2 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+nothing to commit, working tree clean
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git push origin develop
+To https://github.com/tms-dos17-onl/denis-vedenin.git
+ ! [rejected]        develop -> develop (non-fast-forward)
+error: failed to push some refs to 'https://github.com/tms-dos17-onl/denis-vedenin.git'    
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git pull 
+Auto-merging HW7/HW7.md
+CONFLICT (content): Merge conflict in HW7/HW7.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|MERGING)
+$ git status 
+On branch develop
+Your branch and 'origin/develop' have diverged,
+and have 13 and 2 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   HW7.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|MERGING)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|MERGING)
+$ git commit -m "Push branch develop"
+[develop 6e1e669] Push branch develop
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git push origin develop
+Enumerating objects: 18, done.
+Counting objects: 100% (18/18), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (12/12), 1.20 KiB | 616.00 KiB/s, done.
+Total 12 (delta 9), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (9/9), completed with 3 local objects.
+To https://github.com/tms-dos17-onl/denis-vedenin.git
+   374b793..6e1e669  develop -> develop
+```
