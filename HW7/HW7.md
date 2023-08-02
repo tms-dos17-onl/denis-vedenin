@@ -198,6 +198,9 @@ Docker
 Kubernetes
 ............................
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 374b793 (Update HW7)
 
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
 $ git commit -m "Add file README.md and new branch develop"
@@ -215,6 +218,7 @@ Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To https://github.com/tms-dos17-onl/denis-vedenin.git
    1534688..a87b176  develop -> develop
+<<<<<<< HEAD
 ```
 # 13. Создайте из ветки mainветку supportи создайте там файл LICENSEс содержимым https://www.apache.org/licenses/LICENSE-2.0.txt . Создать коммит. Вывести последние 3 коммита.
 
@@ -394,4 +398,6 @@ nothing to commit, working tree clean
 >>>>>>> support
 =======
 >>>>>>> a87b176 (Add file README.md and new branch develop)
+=======
+>>>>>>> 374b793 (Update HW7)
 ```
