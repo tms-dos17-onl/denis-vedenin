@@ -318,3 +318,8 @@ commit 0aa5b782be5df717789ad771a0dbe1537d63d9fb
 Author: denis-vedenin <denved98@mail.ru>
 Date:   Mon Jul 31 17:32:26 2023 +0300
 ```
+# 15. Сделать слияние ветки supportв ветку mainи решить конфликты выбора пути выбора только одной лицензии.
+
+```
+
+```
