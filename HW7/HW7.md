@@ -621,3 +621,9 @@ remote: Resolving deltas: 100% (9/9), completed with 3 local objects.
 To https://github.com/tms-dos17-onl/denis-vedenin.git
    374b793..6e1e669  develop -> develop
 ```
+
+# 19. Зайдите в свой репозиторий на GitHub и создайте Pull Request из ветки developв ветку main.
+
+```
+Сделано
+```
