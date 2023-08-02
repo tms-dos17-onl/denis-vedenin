@@ -392,3 +392,140 @@ nothing to commit, working tree clean
 =======
 >>>>>>> support
 ```
+
+# 16. Переключиться на ветку developи сделать перебазирование относительно ветки main.
+
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git checkout develop
+Switched to branch 'develop'
+Your branch is up to date with 'origin/develop'.
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop)
+$ git rebase main
+Auto-merging HW7/HW7.md
+CONFLICT (content): Merge conflict in HW7/HW7.md
+error: could not apply a87b176... Add file README.md and new branch develop
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".    
+Could not apply a87b176... Add file README.md and new branch develop
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 1/2)
+$ git status
+interactive rebase in progress; onto 11a34f1
+Last command done (1 command done):
+   pick a87b176 Add file README.md and new branch develop
+Next command to do (1 remaining command):
+   pick 374b793 Update HW7
+  (use "git rebase --edit-todo" to view and edit)
+You are currently rebasing branch 'develop' on '11a34f1'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   README.md
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   HW7.md
+
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 1/2)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 1/2)
+$ git status
+interactive rebase in progress; onto 11a34f1
+Last command done (1 command done):
+   pick a87b176 Add file README.md and new branch develop
+Next command to do (1 remaining command):
+   pick 374b793 Update HW7
+  (use "git rebase --edit-todo" to view and edit)
+You are currently rebasing branch 'develop' on '11a34f1'.
+  (all conflicts fixed: run "git rebase --continue")
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   HW7.md
+        modified:   README.md
+
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 1/2)
+$ git commit
+[detached HEAD ae4d938] Add file README.md and new branch develop
+ 2 files changed, 13 insertions(+)
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 1/2)
+$ git status
+interactive rebase in progress; onto 11a34f1
+Last command done (1 command done):
+   pick a87b176 Add file README.md and new branch develop
+Next command to do (1 remaining command):
+   pick 374b793 Update HW7
+  (use "git rebase --edit-todo" to view and edit)
+You are currently editing a commit while rebasing branch 'develop' on '11a34f1'.
+  (use "git commit --amend" to amend the current commit)
+  (use "git rebase --continue" once you are satisfied with your changes)
+
+nothing to commit, working tree clean
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 1/2)
+$ git rebase --continue
+Auto-merging HW7/HW7.md
+CONFLICT (content): Merge conflict in HW7/HW7.md
+error: could not apply 374b793... Update HW7
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".    
+Could not apply 374b793... Update HW7
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 2/2)
+$ git status
+interactive rebase in progress; onto 11a34f1
+Last commands done (2 commands done):
+   pick a87b176 Add file README.md and new branch develop
+   pick 374b793 Update HW7
+No commands remaining.
+You are currently rebasing branch 'develop' on '11a34f1'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   HW7.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 2/2)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 2/2)
+$ git commit -m "rebase 2/2"
+[detached HEAD d2c1445] rebase 2/2
+ 1 file changed, 6 insertions(+)
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 2/2)
+$ git status
+interactive rebase in progress; onto 11a34f1
+Last commands done (2 commands done):
+   pick a87b176 Add file README.md and new branch develop
+   pick 374b793 Update HW7
+No commands remaining.
+You are currently editing a commit while rebasing branch 'develop' on '11a34f1'.
+  (use "git commit --amend" to amend the current commit)
+  (use "git rebase --continue" once you are satisfied with your changes)
+
+nothing to commit, working tree clean
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (develop|REBASE 2/2)
+$ git rebase --continue
+Successfully rebased and updated refs/heads/develop.
+```
