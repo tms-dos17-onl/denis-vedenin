@@ -14,3 +14,25 @@ $ git branch -a
   remotes/origin/HEAD -> origin/main
   remotes/origin/main
 ```
+# 3. Вывести последние 3 комитета с помощью git log.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git log -3
+commit 37e6aff02a69253a253baab0b1f19c7926bda320 (HEAD -> main)
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Fri Aug 4 19:30:50 2023 +0300
+
+    Task 2 done
+
+commit 8156faf30c652cb73aaf74b712076afdbb3e16e0
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Fri Aug 4 19:24:56 2023 +0300
+
+    Task 1 done 'remote repositories'
+
+commit 516b422ab9da7cfebf9c6b486996520fb97c7e88 (origin/main, origin/HEAD)
+Author: denis-vedenin <64193562+deniskin1998@users.noreply.github.com>
+Date:   Fri Aug 4 19:18:24 2023 +0300
+
+    Delete HW7 directory
+```
