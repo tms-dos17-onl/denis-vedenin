@@ -36,3 +36,14 @@ Date:   Fri Aug 4 19:18:24 2023 +0300
 
     Delete HW7 directory
 ```
+# 4. Создать пустой файл README.mdи сделать коммит.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ touch README.md
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ ll
+total 4
+-rw-r--r-- 1 Денис DevOps 197121 1288 Aug  4 19:32 HW7.md
+-rw-r--r-- 1 Денис DevOps 197121    0 Aug  4 19:33 README.md
+```
