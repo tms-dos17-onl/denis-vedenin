@@ -36,7 +36,10 @@ Date:   Fri Aug 4 19:18:24 2023 +0300
 
     Delete HW7 directory
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3742126 (Task 4 done'touch README.md')
 # 4. Создать пустой файл README.mdи сделать коммит.
 ```
 Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
@@ -47,6 +50,7 @@ $ ll
 total 4
 -rw-r--r-- 1 Денис DevOps 197121 1288 Aug  4 19:32 HW7.md
 -rw-r--r-- 1 Денис DevOps 197121    0 Aug  4 19:33 README.md
+<<<<<<< HEAD
 ```
 
 # 5. Добавьте фразу «Hello, DevOps» в README.mdфайл и сделайте коммит.
@@ -115,4 +119,6 @@ Author: denis-vedenin <denved98@mail.ru>
 Date:   Fri Aug 4 19:30:50 2023 +0300
 
     Task 2 done
+=======
+>>>>>>> 3742126 (Task 4 done'touch README.md')
 ```
