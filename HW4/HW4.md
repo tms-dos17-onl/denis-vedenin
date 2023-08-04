@@ -41,65 +41,46 @@ denis@denis-VirtualBox:~$ jobs -l
 [1]+  3250 Terminated              ./ping.sh
 ```
 
-# 5. Написать свой сервис под управлением systemd, добавить его в автозагрузку (можно использовать процесс из п.2
+# 5. Написать свой сервис под управлением systemd, добавить его в автозагрузку (можно использовать процесс из п.2)
 ```
-denis@denis-VirtualBox:~$ sudo nano /etc/systemd/system/hw4_5.service
+denis@denis-VirtualBox:~$ sudo nano /etc/systemd/system/hw4_5_1.service
 [sudo] password for denis: 
 [Unit]
-Discription=hw4_5
-After=network.target
+Description=ping google
 
 [Service]
-Type=folking
+Type=simple
 ExecStart=/home/denis/ping.sh
-User=denis
-Groups=denis
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 
-denis@denis-VirtualBox:~$ sudo systemctl enable hw4_5
-Created symlink /etc/systemd/system/multi-user.target.wants/hw4_5.service → /etc/systemd/system/hw4_5.service.
-denis@denis-VirtualBox:~$ sudo systemctl status hw4_5
-○ hw4_5.service
-     Loaded: loaded (/etc/systemd/system/hw4_5.service; enabled; vendor preset:>
-     Active: inactive (dead)
-ліп 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:>
-ліп 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:>
-ліп 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:>
-denis@denis-VirtualBox:~$ sudo systemctl start hw4_5
-denis@denis-VirtualBox:~$ sudo systemctl status hw4_5
-● hw4_5.service
-     Loaded: loaded (/etc/systemd/system/hw4_5.service; enabled; vendor preset:>
-     Active: active (running) since Mon 2023-07-17 21:16:42 +03; 2s ago
-   Main PID: 5085 (ping.sh)
-      Tasks: 2 (limit: 4598)
-     Memory: 748.0K
-        CPU: 12ms
-     CGroup: /system.slice/hw4_5.service
-             ├─5085 /bin/bash /home/denis/ping.sh
-             └─5086 ping 8.8.8.8
 
-ліп 17 21:16:42 denis-VirtualBox systemd[1]: Started hw4_5.service.
+denis@denis-VirtualBox:~$ sudo systemctl start hw4_5_1
+
+denis@denis-VirtualBox:~$ sudo systemctl status hw4_5_1
+● hw4_5_1.service - ping google
+     Loaded: loaded (/etc/systemd/system/hw4_5_1.service; disabled; vendor preset: enabled)
+     Active: active (running) since Fri 2023-08-04 12:49:50 +03; 1s ago
+
+   Main PID: 3661 (ping.sh)
+      Tasks: 2 (limit: 4598)
+     Memory: 656.0K
+        CPU: 8ms
+     CGroup: /system.slice/hw4_5_1.service
+             ├─3661 /bin/bash /home/denis/ping.sh
+             └─3662 ping 8.8.8.8
 ```
+
+
 
 # 6. Посмотреть логи своего сервиса.
 ```
-denis@denis-VirtualBox:~$ journalctl | grep hw4_5
-
-ліп 17 21:08:40 denis-VirtualBox sudo[5012]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/nano /etc/systemd/system/hw4_5.service
-ліп 17 21:15:34 denis-VirtualBox sudo[5040]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/systemctl enable hw4_5
-ліп 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:2: Unknown key name 'Discription' in section 'Unit', ignoring.
-ліп 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:6: Failed to parse service type, ignoring: folking
-ліп 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:9: Unknown key name 'Groups' in section 'Service', ignoring.
-ліп 17 21:16:21 denis-VirtualBox sudo[5077]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/systemctl status hw4_5
-
-denis@denis-VirtualBox:~$ cat /var/log/syslog | grep hw4_5 | head -5
-
-Jul 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:2: Unknown key name 'Discription' in section 'Unit', ignoring.
-Jul 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:6: Failed to parse service type, ignoring: folking
-Jul 17 21:15:34 denis-VirtualBox systemd[1]: /etc/systemd/system/hw4_5.service:9: Unknown key name 'Groups' in section 'Service', ignoring.
-Jul 17 21:16:42 denis-VirtualBox systemd[1]: Started hw4_5.service.
-Jul 17 21:24:47 denis-VirtualBox systemd[1]: Stopping hw4_5.service...
+denis@denis-VirtualBox:~$ journalctl | grep hw4_5_1
+жні 04 12:46:33 denis-VirtualBox sudo[3611]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/nano /etc/systemd/system/hw4_5_1.service
+жні 04 12:49:20 denis-VirtualBox sudo[3622]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/systemctl status hw4_5_1
+жні 04 12:49:40 denis-VirtualBox sudo[3653]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/systemctl status hw4_5_1
+жні 04 12:49:50 denis-VirtualBox sudo[3657]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/systemctl start hw4_5_1
+жні 04 12:49:51 denis-VirtualBox sudo[3663]:    denis : TTY=pts/0 ; PWD=/home/denis ; USER=root ; COMMAND=/usr/bin/systemctl status hw4_5_1
 ```
