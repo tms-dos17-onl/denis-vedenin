@@ -390,3 +390,53 @@ Changes to be committed:
         modified:   LICENSE
         new file:   LICENSE-2.0.txt
 ```
+
+# 16. Переключиться на ветку develop и сделать rebase относительно ветки main.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (develop)
+$ git rebase main
+Successfully rebased and updated refs/heads/develop.
+```
+
+# 17. Вывести историю последних 10 коммитов в виде графа с помощью команды git log -10 --oneline --graph. 
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (develop)
+$ git log -10 --oneline --graph
+* bd304ae (HEAD -> develop) Task 12 done 'new branch develop'
+*   dc19dec (main) Change conflict LICENSE
+|\
+| * d973439 (support) Update LICENSE
+| * 87835f1 Task 12 done 'new branch support and add file LICENSE'
+* | 480fa17 Task 14 done 'add file LICENSE'
+|/
+* 4ea8911 Task 11 done '.github/workflows/validate-shell.yaml'
+* a20bdec Task 10 done 'git checkout main'
+*   38938dc Conflict
+|\  
+| * fe53632 (origin/main, origin/HEAD) Task 8 done 'git reglog and git cherry pick'     
+* | cf3505f Task 9 done 'git reset --hard HEAD~'
+|/
+```
+
+# 18. Запушить ветку develop. В истории коммитов должен быть мерж support -> main.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (develop)
+$ git push origin develop -f
+Enumerating objects: 42, done.
+Counting objects: 100% (41/41), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (32/32), done.
+Writing objects: 100% (34/34), 9.70 KiB | 1.39 MiB/s, done.
+Total 34 (delta 15), reused 3 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (15/15), completed with 1 local object.
+remote: 
+remote: Create a pull request for 'develop' on GitHub by visiting:
+remote:      https://github.com/tms-dos17-onl/denis-vedenin/pull/new/develop
+remote:
+To https://github.com/tms-dos17-onl/denis-vedenin.git
+ * [new branch]      develop -> develop
+```
