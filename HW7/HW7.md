@@ -231,3 +231,162 @@ Already on 'main'
 Your branch is ahead of 'origin/main' by 2 commits.
   (use "git push" to publish your local commits)
 ```
+
+# 11. Скопировать файл https://github.com/tms-dos17-onl/_sandbox/blob/main/.github/workflows/validate-shell.yaml , положить его по такому же относительному пути в репозиторий. Создать коммит и запушить его в удаленный репозиторий.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   .github/workflows/validate-shell.yaml
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git commit -m "Task 11 done '.github/workflows/validate-shell.yaml'"
+[main 4ea8911] Task 11 done '.github/workflows/validate-shell.yaml'
+ 1 file changed, 24 insertions(+)
+ create mode 100644 .github/workflows/validate-shell.yaml
+```
+
+# 12. Создать из ветки main ветку develop. Переключиться на нее и создать README.md в корневом репозитории. Напишите в этом файле, какие инструменты DevOps вам знакомы и с чем вы хотели бы познакомиться с большими скоростями (2-3 балла).
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git checkout -b develop
+Switched to a new branch 'develop'
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git checkout -b develop
+Switched to a new branch 'develop'
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (develop)
+$ cat README.md 
+Я знаю:
+- Git,Github
+- Linux
+- VirtualBox
+
+Я хочу узнать:
+- CI/CD
+- AWS
+- Kubernetes
+- Docker
+- Jenkins
+```
+
+# 13. Настройте из ветки mainветку supportи там файл LICENSEв корневой репозитории с содержимым https://www.apache.org/licenses/LICENSE-2.0.txt . Создать коммит. Вывести последние 3 коммита.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git checkout -b support
+Switched to a new branch 'support'
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (support)
+$ curl -O https://www.apache.org/licenses/LICENSE-2.0.txt > LICENSE
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 11358  100 11358    0     0  47027      0 --:--:-- --:--:-- --:--:-- 47722
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (support)
+$ git log -3
+commit 87835f1cbcc8df2555df6446d38c01c93580f358 (HEAD -> support)
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Sat Aug 5 13:53:06 2023 +0300
+
+    Task 12 done 'new branch support and add file LICENSE'
+
+commit 4ea8911729e3d0c2c8655db7d516a2bae9016d6c (main)
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Sat Aug 5 13:23:10 2023 +0300
+
+    Task 11 done '.github/workflows/validate-shell.yaml'
+
+commit a20bdecf3eb51a5636058b75bb014632a841dedb
+Author: denis-vedenin <denved98@mail.ru>
+Date:   Sat Aug 5 12:58:14 2023 +0300
+
+    Task 10 done 'git checkout main'
+```
+
+# 14. Переключиться обратно на ветку mainи создать там файл LICENSEв корневой репозитории с содержимым https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt . Создать коммит. Вывести последние 3 коммита.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ curl.exe https://raw.githubusercontent.com/git/git-scm.com/main/MIT-LICENSE.txt > LICENSE
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1072  100  1072    0     0   3727      0 --:--:-- --:--:-- --:--:--  3761
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git add .
+warning: in the working copy of 'LICENSE', LF will be replaced by CRLF the next time Git touches it
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 4 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   LICENSE
+
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git commit -m "Task 14 done 'add file LICENSE'"
+```
+
+# 15. Сделать слияние ветки supportв ветку mainи решить конфликты выбора пути выбора только одной лицензии.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main)
+$ git merge support
+Auto-merging LICENSE
+CONFLICT (add/add): Merge conflict in LICENSE
+Automatic merge failed; fix conflicts and then commit the result.
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main|MERGING)
+$ nano LICENSE
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main|MERGING)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 5 commits.
+  (use "git push" to publish your local commits)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Changes to be committed:
+        new file:   LICENSE-2.0.txt
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both added:      LICENSE
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   HW7/HW7.md
+
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main|MERGING)
+$ git add .
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin (main|MERGING)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 5 commits.
+  (use "git push" to publish your local commits)
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+        modified:   HW7/HW7.md
+        modified:   LICENSE
+        new file:   LICENSE-2.0.txt
+```
