@@ -209,7 +209,6 @@ $ git cherry-pick --continue
  Date: Fri Aug 4 19:36:41 2023 +0300
  1 file changed, 6 insertions(+)
 ```
-<<<<<<< HEAD
 
 # 9. Удалить последний коммит с помощью git reset.
 ```
@@ -217,5 +216,18 @@ $ git cherry-pick --continue
 $ git reset --hard HEAD~
 HEAD is now at 0838600 Task 4 done'touch README.md'
 ```
-=======
->>>>>>> fe53632a880b6f97f8f0b05e4e8ddb651972f306
+
+# 10. Переключиться на ветку mainили master. Если ветка называетсяmaster, то переименовать её в main.
+```
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git branch -a
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+
+Денис DevOps@denis-vedenin MINGW64 ~/denis-vedenin/HW7 (main)
+$ git checkout main
+Already on 'main'
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+```
