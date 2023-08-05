@@ -7,12 +7,12 @@ denis@denis-VirtualBox:~/Desktop$ nano hw3_1.sh
 #!/bin/bash
 #Пишем скрипт о нагрузке ЦП и Памяти и о нахождение IP адресса
 cpuUsage=$(top -bn1 | awk '/Cpu/ { print $2}')
-memUsage=$(free -h | awk '/Mem/{print $3}'| sed 's/Gi/Гб/g')
+memUsage=$(free -h | awk '/Mem/{print $3}' | sed 's/Gi/Гб/g')
 ipUsage=$(ip -4 a | grep /24 | sed 's/inet/ /g')
 # Вывод о нагрузках ЦП и Памяти и IP адресс
-  echo "Нагрузка ЦП: $cpuUsage%"
-  echo "Нагрузка Памяти: $memUsage"
-  echo "IP Адрес:  $ipUsage"
+echo "Нагрузка ЦП: $cpuUsage%"
+echo "Нагрузка Памяти: $memUsage"
+echo "IP Адрес:  $ipUsage"
 ```
 
 # 2. Написать bash-скрипт который создает пользователя (принимает имя в качестве первого аргумента) и создает в его домашней директории файл с информацией о системе: Ядро, CPU, RAM, Дисковая подсистема (lscpu, lsblk, uname, etc). Вывод каждой команды должен быть отделен сепаратором (например ====)
@@ -23,14 +23,14 @@ ipUsage=$(ip -4 a | grep /24 | sed 's/inet/ /g')
 
 sudo useradd -m $1
 sudo passwd $1
-echo "=====" >> /home/$1/sys_info
-uname -a >> /home/$1/sys_info
-echo "=====" >> /home/$1/sys_info
-lscpu >> /home/$1/sys_info
-echo "=====" >> /home/$1/sys_info
-lsblk >> /home/$1/sys_info
-echo "=====" >> /home/$1/sys_info
-vmstat -s >> /home/$1/sys_info
+echo "=====" >>/home/$1/sys_info
+uname -a >>/home/$1/sys_info
+echo "=====" >>/home/$1/sys_info
+lscpu >>/home/$1/sys_info
+echo "=====" >>/home/$1/sys_info
+lsblk >>/home/$1/sys_info
+echo "=====" >>/home/$1/sys_info
+vmstat -s >>/home/$1/sys_info
 Даю пра на исполнение файла
 denis@denis-VirtualBox:~/Desktop$ chmod +x hw3_2.sh 
 Выполняю команду с параметром  user_test
