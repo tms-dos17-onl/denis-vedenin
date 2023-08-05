@@ -209,6 +209,7 @@ $ git cherry-pick --continue
  Date: Fri Aug 4 19:36:41 2023 +0300
  1 file changed, 6 insertions(+)
 ```
+<<<<<<< HEAD
 
 # 9. Удалить последний коммит с помощью git reset.
 ```
@@ -216,3 +217,5 @@ $ git cherry-pick --continue
 $ git reset --hard HEAD~
 HEAD is now at 0838600 Task 4 done'touch README.md'
 ```
+=======
+>>>>>>> fe53632a880b6f97f8f0b05e4e8ddb651972f306
