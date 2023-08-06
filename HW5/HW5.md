@@ -40,8 +40,22 @@ target     prot opt source               destination
 ```
 denis@denis-VirtualBox:~$ sudo apt-get install telnetd
 
-login as: denis
-denis@192.168.56.106's password:
+Запускаю tcpdump на первой ВМ для отлова пакетов
+denis@denis-VirtualBox:~$ sudo tcpdump -i enp0s8 > tcpdump 
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+128 packets captured
+128 packets received by filter
+0 packets dropped by kernel
+
+Запускаю telnet на второй ВМ
+denis@denis-VirtualBox:~$ telnet 192.168.56.106 23
+Trying 192.168.56.106...
+Connected to 192.168.56.106.
+Escape character is '^]'.
+Ubuntu 22.04.2 LTS
+denis-VirtualBox login: denis
+Password: 
 Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.19.0-50-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
@@ -49,14 +63,54 @@ Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.19.0-50-generic x86_64)
  * Support:        https://ubuntu.com/advantage
 
 Expanded Security Maintenance for Applications is not enabled.
-
-34 updates can be applied immediately.
+50 updates can be applied immediately.
 5 of these updates are standard security updates.
 To see these additional updates run: apt list --upgradable
-
 7 additional security updates can be applied with ESM Apps.
 Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+Last login: Sun Aug  6 14:52:43 +03 2023 from denis-VirtualBox on pts/3
 
-Last login: Sat Aug  5 17:01:32 2023 from 192.168.56.1
+Вывод пакетов вывел в файл tcpdump.md
+```
 
+#
+```
+denis@denis-VirtualBox:~$ sudo iptables -A INPUT -p tcp --dport 222 -j ACCEPT
+denis@denis-VirtualBox:~$ sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:222
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination   
+
+Дальше попробовал прослушать порт запустил на первой ВМ 
+denis@denis-VirtualBox:~$ sudo nc -lpv 222
+Listening on 0.0.0.0 222
+Connection received on 192.168.56.1 56083
+google
+Hello world !
+И на второй ВМ и получил чат
+denis@denis-VBox:~$ sudo nc 192.168.56.106 222
+google
+Hello world !
+
+denis@denis-VirtualBox:~$ nmap -PN 222 localhost
+Starting Nmap 7.80 ( https://nmap.org ) at 2023-08-06 15:58 +03
+Nmap scan report for 222 (0.0.0.222)
+Host is up (0.016s latency).
+All 1000 scanned ports on 222 (0.0.0.222) are filtered
+
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00049s latency).
+Not shown: 997 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+23/tcp  open  telnet
+631/tcp open  ipp
+
+Nmap done: 2 IP addresses (2 hosts up) scanned in 0.37 seconds
 ```
