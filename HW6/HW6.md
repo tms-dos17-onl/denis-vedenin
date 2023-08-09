@@ -94,3 +94,42 @@ C:\Windows\system32>curl.exe ifconfig.me
 ```
 172.20.255.255
 ```
+
+# 5. Найдите IP-адрес, соответствующий доменному имени ya.ru. Выполните HTTP-запрос на указанный IP-адрес, чтобы скачать страницу с помощью утилиты curl. В результате должна появиться HTML страничка в консоли. Подсказка: https://stackoverflow.com/questions/46563730/can-i-access-to-website-using-ip-address
+```
+1 способ 
+denis@denis-VirtualBox:~$ ping ya.ru -c 3
+PING ya.ru (5.255.255.242) 56(84) bytes of data.
+64 bytes from ya.ru (5.255.255.242): icmp_seq=1 ttl=51 time=16.7 ms
+64 bytes from ya.ru (5.255.255.242): icmp_seq=2 ttl=51 time=16.2 ms
+64 bytes from ya.ru (5.255.255.242): icmp_seq=3 ttl=51 time=16.6 ms
+--- ya.ru ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 16.190/16.494/16.661/0.215 ms
+```
+```
+denis@denis-VirtualBox:~$ nslookup
+> ya.ru
+
+;; communications error to 127.0.0.53#53: timed out
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	ya.ru
+Address: 77.88.55.242
+Name:	ya.ru
+Address: 5.255.255.242
+Name:	ya.ru
+Address: 2a02:6b8::2:242
+```
+```
+denis@denis-VirtualBox:~$ curl -k -L -H "Host:ya.ru" http://77.88.55.242 > ya.ru
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 12876  100 12876    0     0  75770      0 --:--:-- --:--:-- --:--:-- 75770
+
+html сайта находится в файле ya.html
+```
