@@ -54,3 +54,12 @@ user_test
 sshd
 telnetd
 ```
+
+# 2. Найти и вывести в консоль домашние каталоги для текущего пользователя и root.
+```
+denis@denis-VirtualBox:~$ pwd
+/home/denis
+
+denis@denis-VirtualBox:/$ echo ~root
+/root
+```
