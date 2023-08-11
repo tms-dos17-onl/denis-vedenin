@@ -178,11 +178,10 @@ cat: /tmp/secret.txt: Permission denied
 
 # 12. Добавить пользователя alice в группу, привязанную к файлу /tmp/secret.txt.
 ```
-
+denis@denis-VirtualBox:~$ sudo usermod -a -G bob alice
 
 denis@denis-VirtualBox:~$ su alice 
 Password: 
-denis@denis-VirtualBox:~$ sudo usermod -a -G bob alice
 
 alice@denis-VirtualBox:/home/denis$ cd ~
 alice@denis-VirtualBox:~$ cat /tmp/secret.txt 
@@ -196,6 +195,10 @@ telnetd:x:130:138::/nonexistent:/usr/sbin/nologin
 bob:x:1002:1002::/home/bob:/bin/bash
 alice:x:1003:1002::/home/alice:/bin/bash
 alice@denis-VirtualBox:~$ 
+```
 
-
+# 13. Вывести содержимое файла /tmp/secret.txt.
+```
+alice@denis-VirtualBox:~$ cat /tmp/secret.txt 
+Я не знаю CI/CD
 ```
