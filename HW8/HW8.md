@@ -175,3 +175,27 @@ cat: /tmp/secret.txt: Permission denied
 
 Так как владелец и группа bob:bob то у alice не хватает прав на чтение .
 ```
+
+# 12. Добавить пользователя alice в группу, привязанную к файлу /tmp/secret.txt.
+```
+
+
+denis@denis-VirtualBox:~$ su alice 
+Password: 
+denis@denis-VirtualBox:~$ sudo usermod -a -G bob alice
+
+alice@denis-VirtualBox:/home/denis$ cd ~
+alice@denis-VirtualBox:~$ cat /tmp/secret.txt 
+Я не знаю CI/CD
+
+alice@denis-VirtualBox:~$ ls -l /tmp/secret.txt 
+-r--r----- 1 bob bob 23 жні 11 21:34 /tmp/secret.txt
+
+alice@denis-VirtualBox:~$ tail -3 /etc/passwd
+telnetd:x:130:138::/nonexistent:/usr/sbin/nologin
+bob:x:1002:1002::/home/bob:/bin/bash
+alice:x:1003:1002::/home/alice:/bin/bash
+alice@denis-VirtualBox:~$ 
+
+
+```
