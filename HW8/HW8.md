@@ -134,3 +134,17 @@ alice@denis-VirtualBox:~$ ls -l
 total 4
 -rw-rw-r-- 1 alice alice 31 жні 11 20:36 secret.txt
 ```
+
+# 8. Выйти из сессии от alice и открыть сессию от bob. Вывести содержимое файла /home/alice/secret.txt созданного ранее не прибегая к команде sudo. В случае, если это не работает, объяснить.
+```
+alice@denis-VirtualBox:~$ su bob
+Password: 
+bob@denis-VirtualBox:~$ pwd
+/home/bob
+```
+```
+bob@denis-VirtualBox:~$ cat /home/alice/secret.txt
+cat: /home/alice/secret.txt: Permission denied
+
+Как я понимаю у bob не хватает прав. Так как alice владелец.
+```
