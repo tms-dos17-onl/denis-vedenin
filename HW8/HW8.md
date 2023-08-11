@@ -154,3 +154,11 @@ bob@denis-VirtualBox:~$ nano /tmp/secret.txt
 bob@denis-VirtualBox:~$ cat /tmp/secret.txt
 Я не знаю CI/CD
 ```
+# 10. Вывести права доступа к файлу secret.txt. Поменять права таким образом, чтобы этот файл могли читать только владелец и члены группы, привязанной к файлу.
+```
+bob@denis-VirtualBox:~$ chmod 440 /tmp/secret.txt 
+bob@denis-VirtualBox:~$ ls -l /tmp/secret.txt
+-r--r----- 1 bob bob 23 жні 11 21:34 /tmp/secret.txt
+bob@denis-VirtualBox:~$ cat /tmp/secret.txt
+Я не знаю CI/CD
+```
