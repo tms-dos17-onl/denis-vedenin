@@ -68,9 +68,8 @@ denis@denis-VirtualBox:/$ echo ~root
 ```
 denis@denis-VirtualBox:~$ bash get-date.sh
 Пят 11 жні 2023 18:30:57 +03
-
-![bash]()
 ```
+![bashpng](/HW8/screen/bash.PNG)
 
 # 4. Запустить скрипт через ./get-date.sh и bash get-date.sh. Какой вариант не работает? Сделать так, чтобы оба варианта работали.
 ```
