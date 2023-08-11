@@ -148,3 +148,9 @@ cat: /home/alice/secret.txt: Permission denied
 
 Как я понимаю у bob не хватает прав. Так как alice владелец.
 ```
+# 9. Создать файл secret.txt с каким-нибудь секретом в каталоге /tmp при помощи текстового редактора nano.
+```
+bob@denis-VirtualBox:~$ nano /tmp/secret.txt
+bob@denis-VirtualBox:~$ cat /tmp/secret.txt
+Я не знаю CI/CD
+```
