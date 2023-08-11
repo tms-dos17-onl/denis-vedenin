@@ -202,3 +202,30 @@ alice@denis-VirtualBox:~$
 alice@denis-VirtualBox:~$ cat /tmp/secret.txt 
 Я не знаю CI/CD
 ```
+
+# 14. Скопировать домашнюю директорию пользователя alice в директорию /tmp/alice с помощью rsync.
+```
+alice@denis-VirtualBox:~$ rsync --archive --verbose --progress /home/alice/ /tmp/alice
+sending incremental file list
+created directory /tmp/alice
+./
+.bash_logout
+            220 100%    0,00kB/s    0:00:00 (xfr#1, to-chk=6/8)
+.bashrc
+          3.771 100%    3,60MB/s    0:00:00 (xfr#2, to-chk=5/8)
+.profile
+            807 100%  788,09kB/s    0:00:00 (xfr#3, to-chk=4/8)
+secret.txt
+             31 100%   30,27kB/s    0:00:00 (xfr#4, to-chk=3/8)
+.local/
+.local/share/
+.local/share/nano/
+
+sent 5.238 bytes  received 144 bytes  10.764,00 bytes/sec
+total size is 4.829  speedup is 0,90
+
+alice@denis-VirtualBox:~$ ls /tmp/alice/
+secret.txt
+
+Используя опцию --archive, мы рекурсивно (включая вложенные директории) копируем содержимое /source/ в директорию /destination/ вместе с симлинками. Копируются права доступа, атрибуты времени, информация о владельце и группе. Опция --progress включает отображение прогресса во время копирования, --verbose – увеличивает детализацию сообщений программы.
+```
