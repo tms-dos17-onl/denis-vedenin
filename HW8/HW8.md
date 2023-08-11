@@ -162,3 +162,16 @@ bob@denis-VirtualBox:~$ ls -l /tmp/secret.txt
 bob@denis-VirtualBox:~$ cat /tmp/secret.txt
 Я не знаю CI/CD
 ```
+
+# 11. Выйти из сессии от bob и открыть сессию от alice. Вывести содержимое файла /tmp/secret.txt созданного ранее не прибегая к команде sudo. В случае, если это не работает, объяснить.
+```
+bob@denis-VirtualBox:~$ su alice
+Password: 
+alice@denis-VirtualBox:/home/bob$ cd ~
+alice@denis-VirtualBox:~$ pwd
+/home/alice
+alice@denis-VirtualBox:~$ cat /tmp/secret.txt 
+cat: /tmp/secret.txt: Permission denied
+
+Так как владелец и группа bob:bob то у alice не хватает прав на чтение .
+```
