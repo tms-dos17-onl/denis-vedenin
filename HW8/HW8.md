@@ -115,3 +115,15 @@ denis@denis-VirtualBox:~$ grep -E "alice|bob" /etc/passwd
 bob:x:1002:1002::/home/bob:/bin/bash
 alice:x:1003:1003::/home/alice:/bin/bash
 ```
+
+# 6. Запустить интерактивную сессию от пользователя alice. Создать файл secret.txt с каким-нибудь секретом в домашней директории при помощи текстового редактора nano.
+```
+denis@denis-VirtualBox:~$ su alice
+Password:
+alice@denis-VirtualBox:~$ pwd
+/home/alice
+
+alice@denis-VirtualBox:~$ nano secret.txt
+alice@denis-VirtualBox:~$ ls
+secret.txt
+```
