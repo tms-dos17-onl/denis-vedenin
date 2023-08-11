@@ -63,3 +63,18 @@ denis@denis-VirtualBox:~$ pwd
 denis@denis-VirtualBox:/$ echo ~root
 /root
 ```
+
+# 3. Создать Bash скрипт get-date.sh, выводящий текущую дату.
+```
+denis@denis-VirtualBox:~$ bash get-date.sh
+Пят 11 жні 2023 18:30:57 +03
+```
+
+# 4. Запустить скрипт через ./get-date.sh и bash get-date.sh. Какой вариант не работает? Сделать так, чтобы оба варианта работали.
+```
+denis@denis-VirtualBox:~$ bash get-date.sh
+Пят 11 жні 2023 18:30:57 +03
+denis@denis-VirtualBox:~$ ./get-date.sh
+Пят 11 жні 2023 18:32:59 +03
+```
+
