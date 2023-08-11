@@ -68,6 +68,8 @@ denis@denis-VirtualBox:/$ echo ~root
 ```
 denis@denis-VirtualBox:~$ bash get-date.sh
 Пят 11 жні 2023 18:30:57 +03
+
+![bash]()
 ```
 
 # 4. Запустить скрипт через ./get-date.sh и bash get-date.sh. Какой вариант не работает? Сделать так, чтобы оба варианта работали.
@@ -78,3 +80,38 @@ denis@denis-VirtualBox:~$ ./get-date.sh
 Пят 11 жні 2023 18:32:59 +03
 ```
 
+# 5. Создать пользователей alice и bob с домашними директориями и установить /bin/bash в качестве командной оболочки по умолчанию.
+```
+Создание первого поьзователя bob:
+
+denis@denis-VirtualBox:~$ sudo useradd -m bob
+[sudo] password for denis: 
+denis@denis-VirtualBox:~$ sudo passwd bob
+New password: 
+BAD PASSWORD: The password is a palindrome
+Retype new password: 
+passwd: password updated successfully
+```
+```
+Создание второго поьзователя alice:
+
+denis@denis-VirtualBox:~$ sudo useradd -m alice
+denis@denis-VirtualBox:~$ sudo passwd alice
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully
+```
+```
+denis@denis-VirtualBox:~$ grep -E "alice|bob" /etc/passwd
+bob:x:1002:1002::/home/bob:/bin/sh
+alice:x:1003:1003::/home/alice:/bin/sh
+
+Установить /bin/bash в качестве командной оболочки по умолчанию
+
+denis@denis-VirtualBox:~$ sudo usermod -s /bin/bash bob
+denis@denis-VirtualBox:~$ sudo usermod -s /bin/bash alice
+denis@denis-VirtualBox:~$ grep -E "alice|bob" /etc/passwd
+bob:x:1002:1002::/home/bob:/bin/bash
+alice:x:1003:1003::/home/alice:/bin/bash
+```
