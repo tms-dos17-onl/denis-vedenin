@@ -127,3 +127,10 @@ alice@denis-VirtualBox:~$ nano secret.txt
 alice@denis-VirtualBox:~$ ls
 secret.txt
 ```
+
+# 7. Вывести права доступа к файлу secret.txt.
+```
+alice@denis-VirtualBox:~$ ls -l
+total 4
+-rw-rw-r-- 1 alice alice 31 жні 11 20:36 secret.txt
+```
