@@ -228,3 +228,44 @@ secret.txt
 
 Используя опцию --archive, мы рекурсивно (включая вложенные директории) копируем содержимое /source/ в директорию /destination/ вместе с симлинками. Копируются права доступа, атрибуты времени, информация о владельце и группе. Опция --progress включает отображение прогресса во время копирования, --verbose – увеличивает детализацию сообщений программы.
 ```
+
+# 15. Скопировать домашнюю директорию пользователя alice в директорию /tmp/alice на другую VM по SSH с помощью rsync. Как альтернатива, можно скопировать любую папку с хоста на VM по SSH.
+```
+Первая ВМ 
+denis@denis-VirtualBox:~$ sudo rsync -avz /home/alice denis@192.168.31.184:/tmp
+denis@192.168.31.184's password: 
+sending incremental file list
+alice/
+alice/.bash_history
+alice/.bash_logout
+alice/.bashrc
+alice/.profile
+alice/secret.txt
+alice/.local/
+alice/.local/share/
+alice/.local/share/nano/
+sent 2.943 bytes  received 131 bytes  472,92 bytes/sec
+total size is 5.191  speedup is 1,69
+```
+![](/HW8/screen/VM_1.PNG)
+```
+Вторая ВМ
+denis@denis-VBox:~$ ls /tmp
+alice
+snap-private-tmp
+systemd-private-ae7d01ed582544498c496ef68529e1af-chrony.service-8lPJP1
+systemd-private-ae7d01ed582544498c496ef68529e1af-colord.service-LCajbV
+systemd-private-ae7d01ed582544498c496ef68529e1af-fwupd.service-rA9nk3
+systemd-private-ae7d01ed582544498c496ef68529e1af-ModemManager.service-UhpNoD
+systemd-private-ae7d01ed582544498c496ef68529e1af-power-profiles-daemon.service-LSrUpd
+systemd-private-ae7d01ed582544498c496ef68529e1af-switcheroo-control.service-WwxkKs
+systemd-private-ae7d01ed582544498c496ef68529e1af-systemd-logind.service-BDp4ri
+systemd-private-ae7d01ed582544498c496ef68529e1af-systemd-oomd.service-1xsgAM
+systemd-private-ae7d01ed582544498c496ef68529e1af-systemd-resolved.service-KzBrUA
+systemd-private-ae7d01ed582544498c496ef68529e1af-upower.service-BjbViA
+tracker-extract-3-files.1000
+denis@denis-VBox:~$ cd /tmp
+denis@denis-VBox:/tmp$ ls alice/
+secret.txt
+```
+![](/HW8/screen/VM_2.PNG)
