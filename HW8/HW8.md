@@ -278,3 +278,9 @@ denis@denis-VirtualBox:~$ sudo userdel --remove --force alice
 denis@denis-VirtualBox:~$ ls /home/
 denis  user_test
 ```
+
+# 17.С помощью утилиты htop определить, какой процесс потребляет больше всего ресурсов в системе
+```
+denis@denis-VirtualBox:~$ htop
+```
+![](/HW8/screen/htop.PNG)
