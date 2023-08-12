@@ -269,3 +269,12 @@ denis@denis-VBox:/tmp$ ls alice/
 secret.txt
 ```
 ![](/HW8/screen/VM_2.PNG)
+
+# 16. Удалить пользователей alice и bob вместе с домашними директориями.
+```
+denis@denis-VirtualBox:~$ sudo userdel --remove bob
+[sudo] password for denis: 
+denis@denis-VirtualBox:~$ sudo userdel --remove --force alice
+denis@denis-VirtualBox:~$ ls /home/
+denis  user_test
+```
