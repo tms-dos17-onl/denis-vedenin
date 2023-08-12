@@ -279,8 +279,13 @@ denis@denis-VirtualBox:~$ ls /home/
 denis  user_test
 ```
 
-# 17.С помощью утилиты htop определить, какой процесс потребляет больше всего ресурсов в системе
+# 17. С помощью утилиты htop определить, какой процесс потребляет больше всего ресурсов в системе
 ```
 denis@denis-VirtualBox:~$ htop
 ```
 ![](/HW8/screen/htop.PNG)
+
+# 18. Вывести логи сервиса Firewall с помощью journalctl не прибегая к фильтрации с помощью grep.
+```
+denis@denis-VirtualBox:~$ journalctl -u ufw > /tmp/logufw
+```
