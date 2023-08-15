@@ -32,6 +32,16 @@ Disk /dev/sdb: 5 GiB, 5368709120 bytes, 10485760 sectors
 ![](/HW9/screenHW9/disk.PNG)
 
 # 2. Вывести в консоль информацию по текущему размеру файловой системы.
+```
+denis@denis-VBox:~$ lsblk -f | grep sd
+sda                                                                             
+├─sda1                                                                          
+├─sda2 vfat     FAT32       E7C0-0791                             505,9M     1% /boot/efi
+└─sda3 ext4     1.0         45a4be74-420e-4d85-afea-fe830c241928   15,5G    41% /var/snap/firefox/common/host-hunspell
+
+sdb                                                             
+└─sdb1 ext4     1.0         a1129056-bd24-4570-b71a-2dcb7356c44d    4,6G     0% /media/denis/a1129056-bd24-4570-b71a-2dcb7356c44d
+```
 # 3. Расширить корневую файловую систему за счёт добавленного диска.
 # 4. Вывести информацию по новому размеру файловой системы.
 # 5. Вывести в консоль текущую рабочую директорию.
