@@ -1,46 +1,44 @@
 # 1. Добавить новый диск к виртуальной машине и проверить, что система видит его.
 ```
-Без добавленого диска
-denis@denis-VBox:~$ lsblk -b | grep sd
+denis@denis-VirtualBox:~$ lsblk
 
-sda      8:0    0 32212254720  0 disk 
-├─sda1   8:1    0     1048576  0 part 
-├─sda2   8:2    0   537919488  0 part /boot/efi
-└─sda3   8:3    0 31671189504  0 part /var/snap/firefox/common/host-hunspell
-```
-```
-Диск 2 добавлен
-denis@denis-VBox:~$ lsblk | grep sd
-
-sda      8:0    0    30G  0 disk 
-├─sda1   8:1    0     1M  0 part 
-├─sda2   8:2    0   513M  0 part /boot/efi
-└─sda3   8:3    0  29,5G  0 part /var/snap/firefox/common/host-hunspell
-
-sdb      8:16   0     5G  0 disk 
-
-Второй способ 
-denis@denis-VBox:~$ sudo fdisk -l | grep sd
-
-Disk /dev/sda: 30 GiB, 32212254720 bytes, 62914560 sectors
-/dev/sda1     2048     4095     2048    1M BIOS boot
-/dev/sda2     4096  1054719  1050624  513M EFI System
-/dev/sda3  1054720 62912511 61857792 29,5G Linux filesystem
-
-Disk /dev/sdb: 5 GiB, 5368709120 bytes, 10485760 sectors
+NAME                MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0                 7:0    0  63,4M  1 loop /snap/core20/1974
+loop1                 7:1    0     4K  1 loop /snap/bare/5
+loop2                 7:2    0  73,9M  1 loop /snap/core22/858
+loop3                 7:3    0 237,2M  1 loop /snap/firefox/2987
+loop4                 7:4    0 349,7M  1 loop /snap/gnome-3-38-2004/143
+loop5                 7:5    0 485,5M  1 loop /snap/gnome-42-2204/120
+loop6                 7:6    0  91,7M  1 loop /snap/gtk-common-themes/1535
+loop7                 7:7    0  12,3M  1 loop /snap/snap-store/959
+loop8                 7:8    0  53,3M  1 loop /snap/snapd/19457
+loop9                 7:9    0   452K  1 loop /snap/snapd-desktop-integration/83
+loop10                7:10   0  63,5M  1 loop /snap/core20/2015
+loop11                7:11   0 485,5M  1 loop /snap/gnome-42-2204/126
+sda                   8:0    0    25G  0 disk 
+├─sda1                8:1    0     1M  0 part 
+├─sda2                8:2    0   513M  0 part /boot/efi
+└─sda3                8:3    0  24,5G  0 part 
+  ├─vgubuntu-root   253:0    0  22,6G  0 lvm  /var/snap/firefox/common/host-hunspell
+  │                                           /
+  └─vgubuntu-swap_1 253:1    0   1,9G  0 lvm  [SWAP]
+sdb                   8:16   0    10G  0 disk 
+└─sdb1                8:17   0    10G  0 part /mnt/disksdb1
 ```
 ![](/HW9/screenHW9/disk.PNG)
 
 # 2. Вывести в консоль информацию по текущему размеру файловой системы.
 ```
-denis@denis-VBox:~$ lsblk -f | grep sd
-sda                                                                             
-├─sda1                                                                          
-├─sda2 vfat     FAT32       E7C0-0791                             505,9M     1% /boot/efi
-└─sda3 ext4     1.0         45a4be74-420e-4d85-afea-fe830c241928   15,5G    41% /var/snap/firefox/common/host-hunspell
+denis@denis-VirtualBox:~$ df -h
 
-sdb                                                             
-└─sdb1 ext4     1.0         a1129056-bd24-4570-b71a-2dcb7356c44d    4,6G     0% /media/denis/a1129056-bd24-4570-b71a-2dcb7356c44d
+Файл.система              Размер Использовано  Дост Использовано% Cмонтировано в
+tmpfs                       391M         1,5M  390M            1% /run
+/dev/mapper/vgubuntu-root    23G         9,4G   12G           45% /
+tmpfs                       2,0G            0  2,0G            0% /dev/shm
+tmpfs                       5,0M         4,0K  5,0M            1% /run/lock
+/dev/sda2                   512M         6,1M  506M            2% /boot/efi
+tmpfs                       391M         112K  391M            1% /run/user/1000
+/dev/sdb1                   9,8G          24K  9,3G            1% /mnt/disksdb1
 ```
 # 3. Расширить корневую файловую систему за счёт добавленного диска.
 # 4. Вывести информацию по новому размеру файловой системы.
