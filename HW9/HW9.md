@@ -243,8 +243,6 @@ denis@denis-VirtualBox:~$ wget https://sonatype-download.global.ssl.fastly.net/r
 denis@denis-VirtualBox:~$ sudo nano /opt/nexus/bin/nexus.vmoptions
 Раскомментируйте и отредактируйте следующую строку с пользователем nexus: в файле nexus_rc.md
 denis@denis-VirtualBox:~$ sudo nano /opt/nexus/bin/nexus.rc
-
-
 ```
 - запустить приложение от отдельного пользователя nexus.
 ```
@@ -282,6 +280,8 @@ denis@denis-VirtualBox:~$ sudo systemctl status nexus
 ```
 ![](/HW9/screenHW9/nexus.PNG)
 # 9. Создать в Nexus proxy репозиторий для пакетов ОС и разрешить анонимный доступ.
+![](/HW9/screenHW9/pakeg.PNG)
+![](/HW9/screenHW9/pakeg2.PNG)
 # 10. Поменять для текущей VM основной репозиторий пакетов на созданный ранее proxy в Nexus.
 # 11. Выполнить установку пакета snap и убедиться, что на proxy репозитории в Nexus появились пакеты.
 # 12. (**) На основании шагов из предыдущих пунктов создать DEB/RPM пакет для установки Nexus и загрузить его в Nexus.
