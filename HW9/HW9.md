@@ -133,6 +133,33 @@ denis@denis-VirtualBox:~$ pwd
 /home/denis
 ```
 # 6. Вывести в консоль все файлы из домашней директории.
+```
+denis@denis-VirtualBox:~$ ls -la ~
+итого 88
+drwxr-x--- 14 denis denis 4096 жні 19 16:25  .
+drwxr-xr-x  3 root  root  4096 жні 18 17:52  ..
+-rw-------  1 denis denis 1048 жні 19 16:23  .bash_history
+-rw-r--r--  1 denis denis  220 жні 18 17:52  .bash_logout
+-rw-r--r--  1 denis denis 3771 жні 18 17:52  .bashrc
+drwx------ 10 denis denis 4096 жні 18 18:12  .cache
+drwx------ 11 denis denis 4096 жні 18 18:32  .config
+drwx------  3 denis denis 4096 жні 18 18:10  .local
+-rw-r--r--  1 denis denis  807 жні 18 17:52  .profile
+drwx------  3 denis denis 4096 жні 18 18:12  snap
+-rw-r--r--  1 denis denis    0 жні 18 18:31  .sudo_as_admin_successful
+-rw-r-----  1 denis denis    5 жні 19 16:25  .vboxclient-clipboard.pid
+-rw-r-----  1 denis denis    5 жні 19 16:25  .vboxclient-draganddrop.pid
+-rw-r-----  1 denis denis    5 жні 19 16:25  .vboxclient-seamless.pid
+-rw-r-----  1 denis denis    5 жні 19 16:25  .vboxclient-vmsvga-session-tty2.pid
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Видео
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Документы
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Загрузки
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Изображения
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Музыка
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Общедоступные
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10 'Рабочий стол'
+drwxr-xr-x  2 denis denis 4096 жні 18 18:10  Шаблоны
+```
 # 7. Построить маршрут до google.com при помощи утилиты traceroute.
 # 8. Установить Sonatype Nexus OSS по следующей инструкции, а именно:
 - установку произвести в директорию /opt/nexus.
