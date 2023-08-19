@@ -128,6 +128,10 @@ sdb                   8:16   0    10G  0 disk
 └─vgubuntu-root     253:0    0  32,6G  0 lvm  /var/snap/firefox/common/host-hunspell
 ```
 # 5. Вывести в консоль текущую рабочую директорию.
+```
+denis@denis-VirtualBox:~$ pwd
+/home/denis
+```
 # 6. Вывести в консоль все файлы из домашней директории.
 # 7. Построить маршрут до google.com при помощи утилиты traceroute.
 # 8. Установить Sonatype Nexus OSS по следующей инструкции, а именно:
