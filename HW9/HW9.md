@@ -25,7 +25,6 @@ sda                   8:0    0    25G  0 disk
 sdb                   8:16   0    10G  0 disk 
 └─sdb1                8:17   0    10G  0 part /mnt/disksdb1
 ```
-![](/HW9/screenHW9/disk.PNG)
 
 # 2. Вывести в консоль информацию по текущему размеру файловой системы.
 ```
@@ -49,7 +48,6 @@ sda               8:0    0    25G  0 disk
 ├─sda1            8:1    0     1M  0 part 
 ├─sda2            8:2    0   513M  0 part /boot/efi
 └─sda3            8:3    0  24,5G  0 part 
-
   ├─vgubuntu-root
   │             253:0    0  22,6G  0 lvm  /var/snap/firefox/common/host-hunspell
   │                                       /
@@ -58,7 +56,6 @@ sda               8:0    0    25G  0 disk
                 253:1    0   1,9G  0 lvm  [SWAP]
 sdb               8:16   0    10G  0 disk 
 └─sdb1            8:17   0    10G  0 part 
-
 ```
 ## но дальше я немог увеличить диск так как в нем уже был раздел, я его удалил и далее уже по инструкции https://www.cyberciti.biz/faq/howto-add-disk-to-lvm-volume-on-linux-to-increase-size-of-pool/ прошёл все шаги и у мея всё получилась. Возможно было сделать как то по другому , но лично мне помог этот способ.
 ```
@@ -283,5 +280,15 @@ denis@denis-VirtualBox:~$ sudo systemctl status nexus
 ![](/HW9/screenHW9/pakeg.PNG)
 ![](/HW9/screenHW9/pakeg2.PNG)
 # 10. Поменять для текущей VM основной репозиторий пакетов на созданный ранее proxy в Nexus.
+```
+denis@denis-VirtualBox:~$ sudo cat /etc/apt/sources.list | grep 8081
+[sudo] пароль для denis: 
+deb http://127.0.0.1:8081/repository/my_oc_packages/ focal main restricted
+deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates main restricted
+deb http://127.0.0.1:8081/repository/my_oc_packages/ focal universe
+deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates universe
+deb http://127.0.0.1:8081/repository/my_oc_packages/ focal multiverse  
+deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates multiverse 
+```
 # 11. Выполнить установку пакета snap и убедиться, что на proxy репозитории в Nexus появились пакеты.
 # 12. (**) На основании шагов из предыдущих пунктов создать DEB/RPM пакет для установки Nexus и загрузить его в Nexus.
