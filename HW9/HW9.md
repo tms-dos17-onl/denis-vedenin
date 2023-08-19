@@ -282,13 +282,39 @@ denis@denis-VirtualBox:~$ sudo systemctl status nexus
 # 10. Поменять для текущей VM основной репозиторий пакетов на созданный ранее proxy в Nexus.
 ```
 denis@denis-VirtualBox:~$ sudo cat /etc/apt/sources.list | grep 8081
-[sudo] пароль для denis: 
-deb http://127.0.0.1:8081/repository/my_oc_packages/ focal main restricted
-deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates main restricted
-deb http://127.0.0.1:8081/repository/my_oc_packages/ focal universe
-deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates universe
-deb http://127.0.0.1:8081/repository/my_oc_packages/ focal multiverse  
-deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates multiverse 
+# deb http://127.0.0.1:8081/repository/my_oc_packages/ focal main restricted
+# deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates main restricted
+# deb http://127.0.0.1:8081/repository/my_oc_packages/ focal universe
+# deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates universe
+# deb http://127.0.0.1:8081/repository/my_oc_packages/ focal multiverse  
+# deb http://127.0.0.1:8081/repository/my_oc_packages/ focal-updates multiverse 
+deb http://127.0.0.1:8081/repository/ubuntu/ focal main restricted
+deb http://127.0.0.1:8081/repository/ubuntu/ focal-updates main restricted
+deb http://127.0.0.1:8081/repository/ubuntu/ focal universe
+deb http://127.0.0.1:8081/repository/ubuntu/ focal-updates universe
 ```
 # 11. Выполнить установку пакета snap и убедиться, что на proxy репозитории в Nexus появились пакеты.
+```
+denis@denis-VirtualBox:~$ sudo apt install snap
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово         
+Следующие НОВЫЕ пакеты будут установлены:
+  snap
+Обновлено 0 пакетов, установлено 1 новых пакетов, для удаления отмечено 0 пакетов, и 5 пакетов не обновлено.
+Необходимо скачать 376 kB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 2.714 kB.
+Пол:1 http://127.0.0.1:8081/repository/ubuntu focal/universe amd64 snap amd64 2013-11-29-9 [376 kB]
+Получено 376 kB за 1с (336 kB/s)          
+Выбор ранее не выбранного пакета snap.
+(Чтение базы данных … на данный момент установлено 168372 файла и каталога.)
+Подготовка к распаковке …/snap_2013-11-29-9_amd64.deb …
+Распаковывается snap (2013-11-29-9) …
+Настраивается пакет snap (2013-11-29-9) …
+Обрабатываются триггеры для man-db (2.10.2-1) …
+```
+![](/HW9/screenHW9/snap.PNG)
 # 12. (**) На основании шагов из предыдущих пунктов создать DEB/RPM пакет для установки Nexus и загрузить его в Nexus.
+```
+не делал
+```
