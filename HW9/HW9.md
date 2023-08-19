@@ -215,8 +215,72 @@ traceroute to google.com (216.58.206.46), 30 hops max, 60 byte packets
 ```
 # 8. Установить Sonatype Nexus OSS по следующей инструкции, а именно:
 - установку произвести в директорию /opt/nexus.
+```
+Сначала обновляем системные пакеты до последней версии
+denis@denis-VirtualBox:~$ sudo apt-get update -y
+
+Далее установил java 8 версии, так как nexus основан на java
+sudo apt-get install openjdk-8-jdk -y
+
+Создаю отдельного пользователя для запуска Nexus
+sudo useradd -M -d /opt/nexus -s /bin/bash -r nexus
+
+Создаю пользовотеля nexus
+denis@denis-VirtualBox:~$ sudo useradd -M -d /opt/nexus -s /bin/bash -r nexus
+
+Проверяю создался ли пользователь 
+denis@denis-VirtualBox:~$ cat /etc/passwd
+nexus:x:998:997::/opt/nexus:/bin/bash
+
+Далее выполняю действия
+denis@denis-VirtualBox:~$ sudo mkdir /opt/nexus
+denis@denis-VirtualBox:~$ ls /opt
+nexus  VBoxGuestAdditions-7.0.6
+
+denis@denis-VirtualBox:~$ wget https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.29.2-02-unix.tar.gz
+
+Заменил ../sonatype-work на ./sonatype-work: в файле nexus_vmoption.md
+denis@denis-VirtualBox:~$ sudo nano /opt/nexus/bin/nexus.vmoptions
+Раскомментируйте и отредактируйте следующую строку с пользователем nexus: в файле nexus_rc.md
+denis@denis-VirtualBox:~$ sudo nano /opt/nexus/bin/nexus.rc
+
+
+```
 - запустить приложение от отдельного пользователя nexus.
+```
+denis@denis-VirtualBox:~$ sudo -u nexus /opt/nexus/bin/nexus start
+Starting nexus
+
+denis@denis-VirtualBox:~$ sudo tail -f /opt/nexus/sonatype-work/nexus3/log/nexus.log > nexuslog.txt
+
+denis@denis-VirtualBox:~$ sudo /opt/nexus/bin/nexus stop
+Shutting down nexus
+Stopped.
+```
 - реализовать systemd оболочку для запуска приложения как сервис.
+```
+Скрипт сервиса находится в файле nexus_service.md
+denis@denis-VirtualBox:~$ sudo nano /etc/systemd/system/nexus.service
+
+denis@denis-VirtualBox:~$ sudo systemctl start nexus
+
+denis@denis-VirtualBox:~$ sudo systemctl status nexus
+● nexus.service - nexus service
+     Loaded: loaded (/etc/systemd/system/nexus.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sat 2023-08-19 19:54:02 +03; 10s ago
+    Process: 7020 ExecStart=/opt/nexus/bin/nexus start (code=exited, status=0/SUCCESS)
+
+   Main PID: 7192 (java)
+      Tasks: 46 (limit: 4585)
+     Memory: 375.2M
+        CPU: 27.206s
+     CGroup: /system.slice/nexus.service
+             └─7192 /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -server -Dinstall4j.jvmDir=/usr/lib/>
+жні 19 19:54:02 denis-VirtualBox systemd[1]: Starting nexus service...
+жні 19 19:54:02 denis-VirtualBox nexus[7020]: Starting nexus
+жні 19 19:54:02 denis-VirtualBox systemd[1]: Started nexus service.
+```
+![](/HW9/screenHW9/nexus.PNG)
 # 9. Создать в Nexus proxy репозиторий для пакетов ОС и разрешить анонимный доступ.
 # 10. Поменять для текущей VM основной репозиторий пакетов на созданный ранее proxy в Nexus.
 # 11. Выполнить установку пакета snap и убедиться, что на proxy репозитории в Nexus появились пакеты.
