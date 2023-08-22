@@ -7,11 +7,11 @@ FILENAME=$(ls)
 #fi
 
 if [ -f "${FILENAME}" ]; then
-        if [ -s "${FILENAME}" ]; then
-            echo "File ${FILENAME} существует и не пуст"
-        else
-            echo "File ${FILENAME} существует но пуст"
-        fi
+	if [ -s "${FILENAME}" ]; then
+		echo "File ${FILENAME} существует и не пуст"
+	else
+		echo "File ${FILENAME} существует но пуст"
+	fi
 else
-        echo "File ${FILENAME} не существует"
+	echo "File ${FILENAME} не существует"
 fi
