@@ -14,11 +14,11 @@
 num=$1
 
 if [ -z "$num" ]; then
-    echo "Аргумент не является числом"
+	echo "Аргумент не является числом"
 else
-    if [ $(expr "$num" % 2) -eq 0 ]; then
-        echo "чётное"
-    else
-        echo "нечётное"
-    fi
+	if [ $(expr "$num" % 2) -eq 0 ]; then
+		echo "чётное"
+	else
+		echo "нечётное"
+	fi
 fi
