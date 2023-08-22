@@ -95,6 +95,7 @@ sda               8:0    0    25G  0 disk
 sdb               8:16   0    10G  0 disk 
 └─vgubuntu-root 253:0    0  32,6G  0 lvm  /var/snap/firefox/common/host-hunspell
 ```
+![](/HW9/screenHW9/resize2fs.PNG)
 # 4. Вывести информацию по новому размеру файловой системы.
 ```
 denis@denis-VirtualBox:~$ df -Th
