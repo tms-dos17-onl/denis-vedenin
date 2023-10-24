@@ -1,3 +1,7 @@
 {
-    "shellformat.flag": "-i 0 -sr"
+  "shellformat.flag": "-i 0 -sr",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none"
 }
