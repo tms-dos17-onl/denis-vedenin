@@ -1,0 +1,248 @@
+---
+- hosts: all
+  connection: local
+  become: true
+  vars_files:
+    - vars/default.yml
+
+
+
+  tasks:
+    - name: Install prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+
+    - name: Install unzip
+      package:
+        name: unzip
+        state: present
+
+
+  #Apache Configuration
+    - name: Install LAMP Packages
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'apache2', 'apache2-utils', 'mysql-server', 'python3-pymysql', 'php', php-curl, 'php-mysql', 'python3-pip', 'libapache2-mod-php' ]
+
+      
+  # Installing memcached
+    - name: Install memcached
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'libmemcached-tools', 'memcached', 'php-memcached', 'php-cli'  ]
+
+  # MySQL Configuration
+    - name: Install PyMySQL
+      pip:
+        name: pymysql
+        state: present    
+
+    - name: Create `/root/.my.cnf`  with root password credentials
+      template:
+        src:  "files/my.cnf.j2"
+        dest: /root/.my.cnf
+        owner: root
+        mode: 0600
+
+
+    - name: Sets the root password
+      become: true
+      mysql_user:
+        name: root
+        password: "{{ mysql_root_password }}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+        
+
+    - name: Removes all anonymous user accounts
+      mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+        login_user: root
+        login_password: "{{ mysql_root_password }}"   
+
+        
+
+    - name: Removes the MySQL test database
+      community.mysql.mysql_db:
+        name: test
+        state: absent
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+
+
+   # Download app
+    - name: Download app package
+      ansible.builtin.get_url:
+        url: https://github.com/qyjohn/simple-lamp/archive/refs/heads/master.zip
+        dest: /tmp/simple-lamp.zip
+
+
+
+    - name: Extract app package
+      ansible.builtin.unarchive:
+        src: /tmp/simple-lamp.zip
+        dest: /tmp
+
+
+
+    - name: Copy app package to www
+      ansible.builtin.copy:
+        src: /tmp/simple-lamp-master/
+        dest: "/var/www/{{ http_host }}"
+        owner: www-data
+        group: www-data
+
+        
+
+    - name: Copy configuration PHP 
+      template:
+        src: "files/config.php.j2"
+        dest: "/var/www/{{ http_host }}/config.php"
+      notify: Reload Apache
+
+        
+
+    - name: Restore SQL database
+      community.mysql.mysql_db:
+        name: "{{ mysql_db_name }}"
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ mysql_root_password }}"
+        target: "/var/www/{{ http_host }}/simple_lamp.sql"
+        state: import
+
+
+
+    # PHP
+    - name: Sets Up PHP Info Page
+      template:
+        src: "files/info.php.j2"
+        dest: "/var/www/{{ http_host }}/info.php"
+
+        
+
+        
+
+    #- name: Ensure the default Apache port 
+     # ansible.builtin.lineinfile:
+      #  path: /etc/apache2/ports.conf
+       # regexp: '^Listen '
+        #insertafter: '^#Listen '
+        #line: Listen {{ http_port }}
+
+
+
+    - name: Create document root
+      file:
+        path: "/var/www/{{ http_host }}"
+        state: directory
+        owner: "{{ app_user }}"
+        mode: '0755'
+
+
+
+    
+
+    #- name: Sets the root password
+     # become: true
+      #no_log: true
+      #mysql_user:
+       # login_user: root
+       # login_password: "{{ mysql_root_password }}"
+       # name: root
+       # password: "{{ mysql_root_password }}"
+       # check_implicit_admin: yes
+       # login_unix_socket: /var/run/mysqld/mysqld.sock
+       # priv: "*.*:ALL,GRANT"
+
+
+
+  # UFW Configuration
+    - name: "UFW - Allow HTTP on port {{ http_port }}"
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+        proto: tcp
+
+
+
+  # Download and Installing app
+    #- name: Download and unarchive zip simple-lamp-app
+     # ansible.builtin.unarchive:
+      #  src: "{{ download_app_link }}"
+       # dest: /var/www/
+        #remote_src: yes
+
+      #tags:
+       # - DownloadApp
+
+    #- name: Restore database 
+     # become: true
+
+      #community.mysql.mysql_db:
+       # login_user: root
+        #login_password: "{{ mysql_root_password }}"
+        #name: simple_lamp
+        #state: import
+        #target: /var/www/{{ http_host }}/simple_lamp.sql
+        #force: true
+      #tags:
+       #  - RestoreDB
+
+
+
+    #Apache Configuration
+
+    - name: Set up Apache virtualhost
+      template:
+        src: "files/apache.conf.j2"
+        dest: "/etc/apache2/sites-available/{{ http_conf }}"
+      notify: Reload Apache
+
+    - name: Copy file config file
+      ansible.builtin.copy:
+        src: "/etc/apache2/sites-available/{{ http_conf }}"
+        dest: "/etc/apache2/sites-available/{{ http_conf }}.conf"
+        owner: root
+        group: root
+        mode: '0755'
+        remote_src: True
+
+      
+
+    - name: Enable new site
+      shell: /usr/sbin/a2ensite {{ http_conf }}
+      notify: Reload Apache
+
+
+
+    - name: Disable default Apache site
+      shell: /usr/sbin/a2dissite 000-default.conf
+      when: disable_default
+      notify: Reload Apache
+
+
+    - name: Restart memcached
+      service:
+        name: memcached
+        state: restarted
+
+    - name: Enable service memcached
+      service:
+        name: memcached
+        enabled: yes
+
+
+
+  handlers:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
+
+        
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+
