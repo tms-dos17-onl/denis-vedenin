@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  connection: local
+  #connection: local
   become: true
   vars_files:
     - vars/default.yml
@@ -21,55 +21,78 @@
   #Apache Configuration
     - name: Install LAMP Packages
       apt: name={{ item }} update_cache=yes state=latest
-      loop: [ 'apache2', 'apache2-utils', 'mysql-server', 'python3-pymysql', 'php', php-curl, 'php-mysql', 'python3-pip', 'libapache2-mod-php' ]
+      loop: [ 'apache2', 'apache2-utils', 'python3-pymysql', 'php', php-curl, 'php-mysql', 'php-dev', 'python3-pip', 'libapache2-mod-php' ]
 
-      
-  # Installing memcached
+    - name: Create document root
+      file:
+        path: "/var/www/html/{{ http_host }}"
+        state: directory
+        owner: "{{ app_user }}"
+        mode: '0755'
+
+  # UFW Configuration
+    - name: "UFW - Allow HTTP on port {{ http_port }}"
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+        proto: tcp
+
+
+  # MySQL Configuration
+    - name: Install MySQL Server
+      ansible.builtin.package:
+        name: mysql-server
+        state: latest
+
+    - name: Install MySQL Client
+      ansible.builtin.package:
+        name: mysql-client
+        state: latest
+
+    - name: Start MySQL
+      service:
+        name: mysql
+        state: started
+
+    - name: Install community.mysql dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+
+      loop:
+        - python3
+        - python3-pymysql
+
+    - name: Create Application Database
+      community.mysql.mysql_db:
+        name: "{{ mysql_db_name }}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present
+
+    - name: Create Application DB User
+      community.mysql.mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_root_password }}"
+        priv: "{{ mysql_db_name }}.*:ALL"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present
+
+    # PHP
+    - name: Sets Up PHP Info Page
+      template:
+        src: "files/info.php.j2"
+        dest: "/var/www/html/{{ http_host }}/info.php"
+
+    # Installing memcached
     - name: Install memcached
       apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
       loop: [ 'libmemcached-tools', 'memcached', 'php-memcached', 'php-cli'  ]
 
-  # MySQL Configuration
-    - name: Install PyMySQL
-      pip:
-        name: pymysql
-        state: present    
-
-    - name: Create `/root/.my.cnf`  with root password credentials
-      template:
-        src:  "files/my.cnf.j2"
-        dest: /root/.my.cnf
-        owner: root
-        mode: 0600
-
-
-    - name: Sets the root password
-      become: true
-      mysql_user:
-        name: root
-        password: "{{ mysql_root_password }}"
-        login_unix_socket: /var/run/mysqld/mysqld.sock
-
-        
-
-    - name: Removes all anonymous user accounts
-      mysql_user:
-        name: ''
-        host_all: yes
-        state: absent
-        login_user: root
-        login_password: "{{ mysql_root_password }}"   
-
-        
-
-    - name: Removes the MySQL test database
-      community.mysql.mysql_db:
-        name: test
-        state: absent
-        login_user: root
-        login_password: "{{ mysql_root_password }}"
-
-
+    - name: start and enable memcached service
+      service:
+        name: memcached
+        state: started
+        enabled: yes
 
    # Download app
     - name: Download app package
@@ -89,129 +112,29 @@
     - name: Copy app package to www
       ansible.builtin.copy:
         src: /tmp/simple-lamp-master/
-        dest: "/var/www/{{ http_host }}"
+        dest: "/var/www/html/{{ http_host }}"
         owner: www-data
         group: www-data
-
-        
-
-    - name: Copy configuration PHP 
-      template:
-        src: "files/config.php.j2"
-        dest: "/var/www/{{ http_host }}/config.php"
-      notify: Reload Apache
-
-        
 
     - name: Restore SQL database
       community.mysql.mysql_db:
         name: "{{ mysql_db_name }}"
         login_user: "{{ mysql_user }}"
         login_password: "{{ mysql_root_password }}"
-        target: "/var/www/{{ http_host }}/simple_lamp.sql"
+        target: "/var/www/html/{{ http_host }}/simple_lamp.sql"
         state: import
 
-
-
-    # PHP
-    - name: Sets Up PHP Info Page
+    - name: Copy configuration PHP 
       template:
-        src: "files/info.php.j2"
-        dest: "/var/www/{{ http_host }}/info.php"
-
-        
-
-        
-
-    #- name: Ensure the default Apache port 
-     # ansible.builtin.lineinfile:
-      #  path: /etc/apache2/ports.conf
-       # regexp: '^Listen '
-        #insertafter: '^#Listen '
-        #line: Listen {{ http_port }}
-
-
-
-    - name: Create document root
-      file:
-        path: "/var/www/{{ http_host }}"
-        state: directory
-        owner: "{{ app_user }}"
-        mode: '0755'
-
-
-
-    
-
-    #- name: Sets the root password
-     # become: true
-      #no_log: true
-      #mysql_user:
-       # login_user: root
-       # login_password: "{{ mysql_root_password }}"
-       # name: root
-       # password: "{{ mysql_root_password }}"
-       # check_implicit_admin: yes
-       # login_unix_socket: /var/run/mysqld/mysqld.sock
-       # priv: "*.*:ALL,GRANT"
-
-
-
-  # UFW Configuration
-    - name: "UFW - Allow HTTP on port {{ http_port }}"
-      ufw:
-        rule: allow
-        port: "{{ http_port }}"
-        proto: tcp
-
-
-
-  # Download and Installing app
-    #- name: Download and unarchive zip simple-lamp-app
-     # ansible.builtin.unarchive:
-      #  src: "{{ download_app_link }}"
-       # dest: /var/www/
-        #remote_src: yes
-
-      #tags:
-       # - DownloadApp
-
-    #- name: Restore database 
-     # become: true
-
-      #community.mysql.mysql_db:
-       # login_user: root
-        #login_password: "{{ mysql_root_password }}"
-        #name: simple_lamp
-        #state: import
-        #target: /var/www/{{ http_host }}/simple_lamp.sql
-        #force: true
-      #tags:
-       #  - RestoreDB
-
-
+        src: "files/config.php.j2"
+        dest: "/var/www/html/{{ http_host }}/config.php"
+      notify: Reload Apache
 
     #Apache Configuration
-
     - name: Set up Apache virtualhost
       template:
         src: "files/apache.conf.j2"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
-      notify: Reload Apache
-
-    - name: Copy file config file
-      ansible.builtin.copy:
-        src: "/etc/apache2/sites-available/{{ http_conf }}"
-        dest: "/etc/apache2/sites-available/{{ http_conf }}.conf"
-        owner: root
-        group: root
-        mode: '0755'
-        remote_src: True
-
-      
-
-    - name: Enable new site
-      shell: /usr/sbin/a2ensite {{ http_conf }}
       notify: Reload Apache
 
 
@@ -221,28 +144,34 @@
       when: disable_default
       notify: Reload Apache
 
+    - name: Change directory ownership
+      ansible.builtin.file:
+        path: /var/www/html/{{ http_host }}/uploads
+        owner: www-data
+        group: www-data
 
-    - name: Restart memcached
-      service:
-        name: memcached
-        state: restarted
+    - name: Set up config.php
+      ansible.builtin.template:
+        src: "files/config.php.j2"
+        dest: "/var/www/html/{{ http_host }}/config.php"
 
-    - name: Enable service memcached
-      service:
-        name: memcached
-        enabled: yes
+    - name: Setup Apache site
+      ansible.builtin.template:
+        src: files/apache.conf.j2
+        dest: "/etc/apache2/sites-available/{{ http_host }}.conf"
 
+    - name: Enable Apache site
+      ansible.builtin.command: "a2ensite {{ http_conf }}"
+      notify: Reload Apache
 
-
+      
   handlers:
     - name: Reload Apache
       service:
         name: apache2
         state: reloaded
 
-        
     - name: Restart Apache
       service:
         name: apache2
         state: restarted
-

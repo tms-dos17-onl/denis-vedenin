@@ -1,10 +1,10 @@
 ---
-mysql_user: "root"
-mysql_root_password: "pipirka228"
+mysql_user: "username"
+mysql_root_password: "P@ssw0rd"
 mysql_db_name: "simple_lamp"
 app_user: "denis"
-http_host: "simple-lamp-master"
-http_conf: "simple-lamp-master"
+http_host: "simple-lamp"
+http_conf: "simple-lamp"
 http_port: "80"
 disable_default: true
 download_app_link: "https://github.com/qyjohn/simple-lamp/archive/refs/heads/master.zip"
