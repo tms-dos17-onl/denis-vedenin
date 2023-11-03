@@ -4,19 +4,15 @@ import argparse
 import json
 import xmltodict
 import yaml
-import sys
 
 parser = argparse.ArgumentParser(description='converter')
-parser.add_argument("--infile", help="file name",
-                    type=argparse.FileType('r'), default=sys.stdin)
+parser.add_argument("--infile", help="file name")
 parser.add_argument("--informat", help="format import file")
 parser.add_argument("--outformat", help="format output file")
 args = parser.parse_args()
 
-xml_file = args.infile.read()
-
-# with open(args.infile, 'r') as file:
-#     xml_file = file.read()
+with open(args.infile, 'r') as file:
+    xml_file = file.read()
 # print(xml_file)
 data = xmltodict.parse(xml_file)
 
