@@ -1,0 +1,6 @@
+---
+# vars file for apache
+http_host: "simple-lamp-master"
+http_conf: "simple-lamp-master"
+http_port: "80"
+disable_default: true

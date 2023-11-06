@@ -1,0 +1,12 @@
+---
+# tasks file for memcached
+# Installing memcached
+    - name: Install memcached
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'libmemcached-tools', 'memcached', 'php-memcached', 'php-cli'  ]
+
+    - name: start and enable memcached service
+      service:
+        name: memcached
+        state: started
+        enabled: yes
