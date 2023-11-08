@@ -1,0 +1,19 @@
+---
+# tasks file for php
+ # PHP
+    - name: Sets Up PHP Info Page
+      template:
+        src: "info.php.j2"
+        dest: "/var/www/html/{{ http_host }}/info.php"
+
+    - name: Copy configuration PHP
+      template:
+        src: "config.php.j2"
+        dest: "/var/www/html/{{ http_host }}/config.php"
+      notify: Reload Apache
+
+    - name: Set up config.php
+      ansible.builtin.template:
+        src: "config.php.j2"
+        dest: "/var/www/html/{{ http_host }}/config.php"
+

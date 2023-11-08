@@ -1,0 +1,33 @@
+---
+# tasks file for app
+# Download app
+    - name: Download app package
+      ansible.builtin.get_url:
+        url: https://github.com/qyjohn/simple-lamp/archive/refs/heads/master.zip
+        dest: /tmp/simple-lamp.zip
+
+    - name: Extract app package
+      ansible.builtin.unarchive:
+        src: /tmp/simple-lamp.zip
+        dest: /tmp
+
+    - name: Copy app package to www
+      ansible.builtin.copy:
+        src: /tmp/simple-lamp-master/
+        dest: "/var/www/html/{{ http_host }}"
+        owner: www-data
+        group: www-data
+
+    - name: Restore SQL database
+      community.mysql.mysql_db:
+        name: "{{ mysql_db_name }}"
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ mysql_root_password }}"
+        target: "/var/www/html/{{ http_host }}/simple_lamp.sql"
+        state: import
+
+    - name: Change directory ownership
+      ansible.builtin.file:
+        path: /var/www/html/{{ http_host }}/uploads
+        owner: www-data
+        group: www-data
