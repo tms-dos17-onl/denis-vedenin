@@ -24,13 +24,13 @@ class SeleniumTest(unittest.TestCase):
 
     def test_title(self):
         self.browser.get("https://google.com")
-        self.skip_google_popup()
+        # self.skip_google_popup()
 
         self.assertIn("Google", self.browser.title)
 
     def test_page_source(self):
         self.browser.get("https://google.com")
-        self.skip_google_popup()
+        # self.skip_google_popup()
 
         search = self.browser.find_element(By.NAME, "q")
         search.clear()
