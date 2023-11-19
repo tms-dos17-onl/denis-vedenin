@@ -1,12 +1,12 @@
 <Person>
-    <FirstName>Ivan</FirstName>
-    <LastName>Ivanov</LastName>
-    <Jobs>
-        <Job>
-            <Title>Manager</Title>
-        </Job>
-        <Job>
-            <Title>Consultant</Title>
-        </Job>
-    </Jobs>
+        <FirstName>Ivan</FirstName>
+        <Jobs>
+                <Job>
+                        <Title>Manager</Title>
+                </Job>
+                <Job>
+                        <Title>Consultant</Title>       
+                </Job>
+        </Jobs>
+        <LastName>Ivanov</LastName>
 </Person>
