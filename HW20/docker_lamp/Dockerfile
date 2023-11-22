@@ -1,4 +1,4 @@
-"FROM ubuntu:22.04
+FROM ubuntu:22.04
 
 
 
@@ -39,4 +39,4 @@ RUN git clone https://github.com/qyjohn/simple-lamp \
 
 EXPOSE 80
 
-ENTRYPOINT ["/lib/systemd/systemd"]"
+ENTRYPOINT ["/lib/systemd/systemd"]
