@@ -1,0 +1,40 @@
+---
+# tasks file for mysql
+# MySQL Configuration
+    - name: Install MySQL Server
+      ansible.builtin.package:
+        name: mysql-server
+        state: latest
+
+    - name: Install MySQL Client
+      ansible.builtin.package:
+        name: mysql-client
+        state: latest
+
+    - name: Start MySQL
+      service:
+        name: mysql
+        state: started
+
+    - name: Install community.mysql dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+
+      loop:
+        - python3
+        - python3-pymysql
+
+    - name: Create Application Database
+      community.mysql.mysql_db:
+        name: "{{ mysql_db_name }}"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present
+
+    - name: Create Application DB User
+      community.mysql.mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_root_password }}"
+        priv: "{{ mysql_db_name }}.*:ALL"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present

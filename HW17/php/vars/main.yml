@@ -1,0 +1,4 @@
+---
+# vars file for php
+http_host: "simple-lamp-master"
+http_conf: "simple-lamp-master"

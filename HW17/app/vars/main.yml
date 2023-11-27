@@ -1,0 +1,7 @@
+---
+# vars file for app
+download_app_link: "https://github.com/qyjohn/simple-lamp/archive/refs/heads/master.zip"
+http_host: "simple-lamp-master"
+mysql_user: "username"
+mysql_root_password: "P@ssw0rd"
+mysql_db_name: "simple_lamp-master"

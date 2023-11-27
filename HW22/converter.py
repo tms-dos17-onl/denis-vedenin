@@ -6,44 +6,33 @@ import xmltodict
 import yaml
 import sys
 
-parser = argparse.ArgumentParser(description='converter')
-parser.add_argument("--infile", help="file name",
-                    type=argparse.FileType('r'), default=sys.stdin)
-parser.add_argument("--informat", help="format import file")
-parser.add_argument("--outformat", help="format output file")
-args = parser.parse_args()
 
-xml_file = args.infile.read()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='converter')
+    parser.add_argument("--infile", help="file name",
+                        type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument(
+        "--informat", choices=['json', 'xml', 'yaml'], help="format import file")
+    parser.add_argument(
+        "--outformat", choices=['json', 'xml', 'yaml'], help="format output file")
+    args = parser.parse_args()
 
-# with open(args.infile, 'r') as file:
-#     xml_file = file.read()
-# print(xml_file)
-data = xmltodict.parse(xml_file)
+    if args.informat == "xml":
+        file_in = xmltodict.parse(args.infile.read())
+        # print(xml_forma)
+    elif args.informat == "json":
+        file_in = json.load(args.infile)
+        # print(json_forma)
+    elif args.informat == "yaml":
+        file_in = yaml.load(args.infile, Loader=yaml.SafeLoader)
+        # print(yaml_forma)
 
-# using json.dumps to convert dictionary to JSON
-json_file = json.dumps(data, indent=4)
-# print(json_file)
-
-# using yaml.dump to convert dictionary to YAML
-yaml_file = yaml.dump(data)
-# print(data)
-
-if args.informat == "xml":
-    xml_forma = xml_file
-    # print(xml_forma)
-elif args.informat == "json":
-    json_forma = json_file
-    # print(json_forma)
-elif args.informat == "yaml":
-    yaml_forma = yaml_file
-    # print(yaml_forma)
-
-if args.outformat == "xml":
-    forma = xml_file
-    print(forma)
-elif args.outformat == "json":
-    forma = json_file
-    print(forma)
-elif args.outformat == "yaml":
-    forma = yaml_file
-    print(forma)
+    if args.outformat == "xml":
+        file_out = xmltodict.unparse(file_in, pretty=True)
+        print(file_out)
+    elif args.outformat == "json":
+        file_out = json.dumps(file_in, indent=4)
+        print(file_out)
+    elif args.outformat == "yaml":
+        file_out = yaml.dump(file_in)
+        print(file_out)

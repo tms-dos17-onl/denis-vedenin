@@ -1,0 +1,51 @@
+---
+# tasks file for apache
+    - name: Install prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+
+    - name: Install unzip
+      package:
+        name: unzip
+        state: present
+
+
+  #Apache Configuration
+    - name: Install LAMP Packages
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'apache2', 'apache2-utils', 'python3-pymysql', 'php', php-curl, 'php-mysql', 'php-dev', 'python3-pip', 'libapache2-mod-php' ]
+
+    - name: Create document root
+      file:
+        path: "/var/www/html/{{ http_host }}"
+        state: directory
+        owner: "{{ app_user }}"
+        mode: '0755'
+
+# UFW Configuration
+    - name: "UFW - Allow HTTP on port {{ http_port }}"
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+        proto: tcp
+
+ #Apache Configuration
+    - name: Set up Apache virtualhost
+      template:
+        src: "apache.conf.j2"
+        dest: "/etc/apache2/sites-available/{{ http_conf }}"
+      notify: Reload Apache
+
+    - name: Disable default Apache site
+      shell: /usr/sbin/a2dissite 000-default.conf
+      when: disable_default
+      notify: Reload Apache
+
+    - name: Setup Apache site
+      ansible.builtin.template:
+        src: "apache.conf.j2"
+        dest: "/etc/apache2/sites-available/{{ http_host }}.conf"
+
+    - name: Enable Apache site
+      ansible.builtin.command: "a2ensite {{ http_conf }}"
+      notify: Reload Apache
