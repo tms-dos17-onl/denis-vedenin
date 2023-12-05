@@ -1,0 +1,27 @@
+!#groovy
+pipeline {
+    agent {
+        label 'debian'
+    }
+    triggers {
+        cron "* 1 * * *"
+    }
+    stages {
+        stage('Clone') {
+            steps{
+                git branch: 'main', credentialsId: 'jenkins_token', url: 'https://github.com/tms-dos17-onl/spring-petclinic.git'
+                sh 'pwd'
+                sh 'ls -lah'
+            }
+            
+        }
+        stage('Build') {
+            steps{
+                sh 'cd /tmp/workspace/pipeline_HW26'
+                sh './mvnw package'
+                sh './mvnw spring-boot:build-image'
+                
+            }
+        }
+    }
+}
