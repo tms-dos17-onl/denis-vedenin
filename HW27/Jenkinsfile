@@ -1,0 +1,53 @@
+pipeline {
+    agent {
+        label 'linux'
+    }
+    triggers {
+        cron "* 1 * * *"
+    }
+    stages {
+        stage('Clone') {
+            steps{
+                git branch: 'main', credentialsId: 'jenkins_token', url: 'https://github.com/tms-dos17-onl/spring-petclinic.git'
+                sh 'pwd'
+                sh 'ls -lah'
+            }
+        }
+        stage('Build') {
+            steps{
+                sh 'cd /tmp/workspace/HW27_pipeline'
+                sh './mvnw package'
+                sh 'pwd'
+                sh 'ls -la'
+                echo "Build end"
+                stash (name: 'jar')
+            }
+        }
+        
+        stage('Integration Tests') {
+            agent {
+                docker { image 'maven:3.9.5-eclipse-temurin-17-alpine'
+                         label "docker"
+                }
+            }
+            steps {
+                unstash 'jar'
+                sh 'ls target/'
+                sh 'java -jar target/*.jar &'
+                sh 'sleep 30'
+                sh 'curl http://localhost:8080'
+                sh 'pwd'
+                sh 'ls -la'
+                echo "Tests end"
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                sh 'cd /tmp/workspace/HW27_pipeline'
+                archiveArtifacts artifacts: "target/*.jar", fingerprint: true
+            }
+        }
+    }
+
+}
