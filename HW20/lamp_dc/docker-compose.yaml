@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+
+  php_apache:
+   build: ./phpapache/
+   ports:
+    - 8080:80
+   restart: always
+   volumes:
+    - ./simple-lamp/:/var/www/html/simple-lamp
+   depends_on:
+    - mysql
+    - memcached
+
+  mysql:
+    image: mysql
+    container_name: mysqlforlamp
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: simple_lamp
+    ports:
+     - '3306:3306'
+    volumes:
+      - "./simple-lamp/simple_lamp.sql:/docker-entrypoint-initdb.d/simple_lamp.sql"
+
+  memcached:
+    image: memcached
+    container_name: memcachedforlamp
+    ports:
+      - 11211:11211
