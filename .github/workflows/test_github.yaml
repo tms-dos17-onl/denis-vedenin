@@ -16,7 +16,7 @@ jobs:
         github_token: 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 
       
     - name: Ckeck  
-      run: ls -la
+      run: ls -la spring-petclinic/
 
 
   
