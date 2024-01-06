@@ -12,7 +12,7 @@ jobs:
     - name: Echo
       run: echo "hello world!" > hello.txt
     - name: Ls
-      run: ls -la
+      run: docker --version
 
 
   Build:
