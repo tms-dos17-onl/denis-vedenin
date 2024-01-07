@@ -26,9 +26,8 @@ jobs:
     - name: Build
       run: |
         echo "------ Build project statrt ------"
-        apt-get update
-        apt-get upgrade
-        apt install openjdk-17-jdk openjdk-17-jre
+        sudo apt-get update && sudo apt-get upgrade -y
+        sudo apt install openjdk-17-jdk openjdk-17-jre -y
         java -version
         cd spring-petclinic
         ./mvnw package
