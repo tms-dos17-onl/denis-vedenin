@@ -23,12 +23,15 @@ jobs:
         git clone https://$github_token@github.com/tms-dos17-onl/spring-petclinic.git
         ls -la spring-petclinic/
         echo "------ Clone project end ------"
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
     - name: Build
       run: |
-        echo "------ Build project statrt ------"
-        sudo apt-get update && sudo apt-get upgrade -y
-        sudo apt install openjdk-17-jdk openjdk-17-jre -y
-        java -version
         cd spring-petclinic
         ./mvnw package
         ls -la
