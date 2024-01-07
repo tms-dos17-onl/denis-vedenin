@@ -33,6 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: spring-petclinic
     steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v3
       with:
