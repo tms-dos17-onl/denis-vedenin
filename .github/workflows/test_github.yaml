@@ -29,7 +29,7 @@ jobs:
     needs: spring-petclinic
     steps:
     - name: Build
-      run: echo "Build"
+      run: ls -la
   
     
 
