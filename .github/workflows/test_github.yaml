@@ -15,7 +15,7 @@ jobs:
         git clone https://$github_token@github.com/tms-dos17-onl/spring-petclinic.git
         ls -la spring-petclinic/
       env:
-        github_token: ${{ github.token }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         # 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 
       
     - name: Ckeck  
