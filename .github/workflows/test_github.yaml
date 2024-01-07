@@ -23,26 +23,13 @@ jobs:
         git clone https://$github_token@github.com/tms-dos17-onl/spring-petclinic.git
         ls -la spring-petclinic/
         echo "------ Clone project end ------"
-    - name: Upload artifact    
-      uses: actions/upload-artifact@v3
-      with:
-        name: my-artifact
-        path: HW28
-
-  Build:
-    runs-on: ubuntu-latest
-    needs: spring-petclinic
-    steps:
-    - name: Checkout
-      uses: actions/checkout@master
-      
-    - name: Download all workflow run artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: my-artifact
-        path: HW28
-    - name: Check forder
-      run: ls -la
+    - name: Build
+      run: |
+        echo "------ Build project statrt ------"
+        cd spring-petclinic
+        ./mvnw package
+        ls -la
+        echo "------ Build project end ------"
   
     
 
