@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone
-      run: git clone https://$github_token@github.com/tms-dos17-onl/spring-petclinic.git
+      run: |
+        git clone https://$github_token@github.com/tms-dos17-onl/spring-petclinic.git
+        ls -la spring-petclinic/
       env:
-        github_token: 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 
+        github_token: ${{ github.token }}
+        # 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 
       
     - name: Ckeck  
       run: ls -la spring-petclinic/
