@@ -5,9 +5,10 @@ on:
     branches:
       - main
 
+runs-on: ubuntu-latest
+
 jobs:
   Clone:
-    runs-on: ubuntu-latest
     steps:
     - name: Echo
       run: echo "hello world!" > hello.txt
@@ -16,7 +17,6 @@ jobs:
 
 
   Build:
-    runs-on: ubuntu-latest
     steps:
     - name: Ls
       run: ls -la
