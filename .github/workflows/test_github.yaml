@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: Clone
       env:
-        github_token: ${{ secrets.TEST_SECRET }}
+        github_token: ${{ secrets.hw28}}
         # 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 
       run: |
         git clone https://$github_token@github.com/tms-dos17-onl/spring-petclinic.git
