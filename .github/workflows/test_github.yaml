@@ -8,6 +8,17 @@ on:
 
 jobs:
   spring-petclinic:
+    runs-on: ubuntu-latest
+    steps:name: Test-GitHubActions
+
+on: 
+  push:
+    branches:
+      - main
+
+
+jobs:
+  spring-petclinic:
     # strategy:
     #   matrix:
     #     platform: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
@@ -33,10 +44,7 @@ jobs:
     - name: Build
       run: |
         cd spring-petclinic
-        ./mvnw package
+        ./mvnw package -f ./pom.xml
         ls -la
         echo "------ Build project end ------"
-  
-    
-
   
