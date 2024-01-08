@@ -1,0 +1,50 @@
+image: maven:latest
+
+stages:          # List of stages for jobs, and their order of execution
+  - clone
+  - build
+  - publish
+  - notification
+
+clone-job:
+  stage: clone
+  artifacts:
+    paths:
+      - .
+  script:
+    - git clone https://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@github.com/tms-dos17-onl/spring-petclinic.git
+    - ls -la
+
+build-jobpackege:
+   stage: build
+   artifacts:
+     paths:
+       - .
+   script:
+    - spring-petclinic/mvnw package -f spring-petclinic/pom.xml
+    - ls -la
+
+build-jobtest:
+   needs:
+    - build-jobpackege
+   stage: build
+   artifacts:
+     paths:
+       - .
+   script:
+    - spring-petclinic/mvnw test -f ./spring-petclinic/pom.xml
+    - ls -la
+
+publish-job:
+  stage: publish
+  artifacts:
+    reports:
+      junit:
+        - spring-petclinic/target/surefire-reports/*.xml
+  script:
+  - ls -la
+
+notification-job:      
+  stage: notification 
+  script:
+    - echo "Notification will be send now automaticaly to $GITLAB_USER_EMAIL as indicated in integration with email settings"
