@@ -63,6 +63,7 @@ resource "google_compute_instance" "tfinstance" {
       image = data.google_compute_image.debian_image.self_link
       size  = 15
     }
+
   }
 
   network_interface {
@@ -73,6 +74,10 @@ resource "google_compute_instance" "tfinstance" {
       }
     }
   }
+  depends_on = [time_sleep.machine_sleep]
+}
+resource "time_sleep" "machine_sleep" {
+  create_duration = "30s"
 }
 
 resource "google_compute_firewall" "rules" {
