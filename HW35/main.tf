@@ -28,6 +28,7 @@ resource "google_storage_bucket_object" "file_key" {
 }
 
 terraform {
+  # backend "local" {}
   backend "gcs" {
     bucket      = "hw35-bucket"
     prefix      = "terraform/state"
@@ -50,9 +51,10 @@ output "my-ip" {
 }
 
 resource "google_compute_instance" "tfinstance" {
-  name         = "tf-instance"
+  for_each     = toset(var.zone)
+  name         = "tf-instance-${each.key}"
   machine_type = var.machine_type
-  zone         = var.zone[1]
+  zone         = each.key
 
   tags = ["foo", "bar", "test"]
 
