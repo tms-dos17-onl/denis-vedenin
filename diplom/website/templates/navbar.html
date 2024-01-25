@@ -8,24 +8,24 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'suggest' %}">Дополнить</a>
+          <a class="nav-link" href="{% url 'suggest' %}">Доповнити</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Исправить</a>
+          <a class="nav-link" href="{% url 'home' %}">Виправити</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'explain' %}">Объяснение</a>
+          <a class="nav-link" href="{% url 'explain' %}">Пояснення</a>
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'past' %}">История</a>
+          <a class="nav-link" href="{% url 'past' %}">Історія</a>
         </li>
         <li class="nav-item ml-auto"> <!-- Додайте клас ml-auto тут -->
-          <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+          <a class="nav-link" href="{% url 'logout' %}">Вийти</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}">Зарегистрироваться</a>
+          <a class="nav-link" href="{% url 'register' %}">Зареєструватися</a>
         </li>
         {% endif %}
       </ul>
