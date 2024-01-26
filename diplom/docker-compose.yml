@@ -3,6 +3,8 @@ version: '3'
 services:
   db:
     image: postgres:13
+    env_file:
+      - ./docker.env
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USER}
