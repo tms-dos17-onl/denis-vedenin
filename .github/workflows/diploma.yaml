@@ -1,0 +1,23 @@
+name: Diplom
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Validate-Shell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cheking file
+        run: |
+          ls -la 
+          cd diplom 
+
+      - name: Docker compose up
+        run: docker-compose -v
