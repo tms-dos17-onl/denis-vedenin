@@ -1,7 +1,7 @@
 provider "google" {
-  project = "my-project-terraform-407409"
-
-  credentials = file("sevice-key.json")
+  project     = "my-project-terraform-407409"
+  region      = "us-central1"
+  credentials = file("service-key.json")
 }
 
 resource "google_compute_instance" "vm_instance" {
