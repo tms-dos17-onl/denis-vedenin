@@ -4,41 +4,44 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+
 
 jobs:
-  Build_and_Publish_Docker:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./diplom
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@v3
-      - name: Cheking file
-        run: ls -la
-      
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_TEST }}
-    
-      - name: Build and push Docker image
-        run: |
-          docker-compose build
-          docker images 
-# docker build -t vedenindenis/my-image:latest .
-# docker push vedenindenis/my-image:latest
-
-
-
-  # Terraform_create_GKE:
+  # Build_and_Publish_Docker:
   #   runs-on: ubuntu-latest
   #   defaults:
   #     run:
   #       working-directory: ./diplom
   #   timeout-minutes: 3
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Cheking file
+  #       run: ls -la
       
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKER_TEST }}
+    
+  #     - name: Build and push Docker image
+  #       run: | 
+  #         docker build -t vedenindenis/diplom_web:latest .
+  #         docker push vedenindenis/diplom_web:latest
+
+
+
+  Terraform_GKE:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./diplom/.infra
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform plan
+        run: terraform plan
