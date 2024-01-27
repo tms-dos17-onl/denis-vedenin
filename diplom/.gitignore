@@ -4,7 +4,7 @@
 # env/
 venv/
 .vscode/
-
+*.json
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,venv,pycharm,vs,visualstudio,visualstudiocode,direnv,dotenv,virtualenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,venv,pycharm,vs,visualstudio,visualstudiocode,direnv,dotenv,virtualenv
 
