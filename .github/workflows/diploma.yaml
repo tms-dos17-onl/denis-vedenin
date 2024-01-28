@@ -57,8 +57,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Auth K8S
-        run: gcloud container clusters get-credentials my-project-kubernetes-409711-gke --region us-central1 --project my-project-kubernetes-409711
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Get list nodes
         run: kubectl get nodes
