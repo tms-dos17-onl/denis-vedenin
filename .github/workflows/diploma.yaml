@@ -31,24 +31,39 @@ jobs:
 
 
 
-  Terraform_GKE:
+  # Terraform_GKE:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./diplom/.infra
+  #   timeout-minutes: 15
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Terraform Format
+  #       id: fmt
+  #       run: terraform fmt -check
+
+  #     - name: Terraform init
+  #       run: terraform init
+
+  #     - name: Terraform plan
+  #       run: terraform plan
+
+  #     - name: Terraform aplly
+  #       run: terraform apply -auto-approve
+
+  K8S:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./diplom/.infra
-    timeout-minutes: 15
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v3
+      - name: Auth K8S
+        run: gcloud container clusters get-credentials my-project-kubernetes-409711-gke --region us-central1 --project my-project-kubernetes-409711
 
-      - name: Terraform Format
-        id: fmt
-        run: terraform fmt -check
+      - name: Get list nodes
+        run: kubectl get nodes
 
-      - name: Terraform init
-        run: terraform init
+      - name: Get list service
+        run: kubectl get service
 
-      - name: Terraform plan
-        run: terraform plan
-
-      - name: Terraform aplly
-        run: terraform apply -auto-approve
+      
