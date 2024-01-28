@@ -62,7 +62,10 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: google-github-actions/auth@v0.4.0
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: k8s google 
+        run: gcloud container clusters get-credentials my-project-kubernetes-409711-gke --region us-central1 --project my-project-kubernetes-409711
 
       - name: Get list nodes
         run: kubectl get nodes
