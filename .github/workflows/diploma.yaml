@@ -72,6 +72,6 @@ jobs:
         run: gcloud components install kubectl
 
       - name: kubeconfig
-        run: kubectl cluster-info
+        run: kubectl cluster-info dump
 
       
