@@ -69,15 +69,11 @@ jobs:
           project_id: "my-project-kubernetes-409711"
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           export_default_credentials: true
-
-      - name: Check kubeconfig    
-        run: "cat $HOME/.kube/config"
       
-
-      # - uses: tale/kubectl-action@v1
-      #   with:
-      #     base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-      # - run: kubectl get pods
+      - uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+      - run: kubectl get pods
 
 
       
