@@ -69,7 +69,9 @@ jobs:
           project_id: "my-project-kubernetes-409711"
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           export_default_credentials: true
-          run: "cat $HOME/.kube/config"
+
+      - name: Check kubeconfig    
+        run: "cat $HOME/.kube/config"
       
 
       # - uses: tale/kubectl-action@v1
