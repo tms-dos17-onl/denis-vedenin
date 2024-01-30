@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  # PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: my-project-kubernetes-409711-gke    # cluster name
+  GKE_ZONE: us-central1  # cluster zone
 
 jobs:
   # Build_and_Publish_Docker:
@@ -61,17 +65,11 @@ jobs:
       - name: code checkout
         uses: actions/checkout@v2
 
-      - name: install the gcloud cli
-        uses: google-github-actions/setup-gcloud@v2
+      - name: Set up GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
         with:
-          project_id: "my-project-kubernetes-409711"
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-          export_default_credentials: true
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
 
-      - name: install kubectl
-        run: gcloud components install kubectl
-
-      - name: kubeconfig
-        run: kubectl cluster-info dump
-
-      
+      - name: Deploy
+        run: kubectl get nodes
