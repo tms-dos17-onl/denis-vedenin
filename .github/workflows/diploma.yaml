@@ -84,6 +84,7 @@ jobs:
       - name: Deploy
         run: |
           kubectl get nodes
+          kubectl apply -f 3-namespace.yaml
           kubectl apply -f 1-nginx_deploy.yaml
           kubectl apply -f 2-tomcat_deploy.yaml
 
