@@ -36,27 +36,27 @@ jobs:
 
 
 
-  Terraform_GKE:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./diplom/.infra
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v3
+  # Terraform_GKE:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./diplom/.infra
+  #   timeout-minutes: 20
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Terraform Format
-        id: fmt
-        run: terraform fmt -check
+  #     - name: Terraform Format
+  #       id: fmt
+  #       run: terraform fmt -check
 
-      - name: Terraform init
-        run: terraform init
+  #     - name: Terraform init
+  #       run: terraform init
 
-      - name: Terraform plan
-        run: terraform plan
+  #     - name: Terraform plan
+  #       run: terraform plan
 
-      - name: Terraform aplly
-        run: terraform apply -auto-approve
+  #     - name: Terraform aplly
+  #       run: terraform apply -auto-approve
 
   K8S:
     runs-on: ubuntu-latest

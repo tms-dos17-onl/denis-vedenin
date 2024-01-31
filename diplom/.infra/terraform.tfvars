@@ -2,4 +2,4 @@
 # SPDX-License-Identifier: MPL-2.0
 
 project_id = "my-project-kubernetes-409711"
-region     = "us-central1"
+region     = "europe-west10"
