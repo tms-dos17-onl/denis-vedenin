@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: webapp
+  creationTimestamp: null
+  labels:
+    app: tomcat-webapp
+  name: tomcat-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat-webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app      : tomcat-webapp          # Service will look for those PODS Labels
+        container: tomcat-custom
+    spec:
+      containers:
+        - image          : tomcat:9.0
+          name           : tomcat-container
+          imagePullPolicy: Always
+          resources      : {}
+          ports:
+            - containerPort: 8080
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: webapp
+  name     : tomcat-webapp
+  labels:
+    run: tomcat-webapp              # Select PODS with those Labels
+spec:
+  ports:
+    - name      : tomcat-listener
+      protocol  : TCP
+      port      : 80                # Port on Load Balancer
+      targetPort: 8080              # Port on POD
+  selector:
+    app      : tomcat-webapp
+    container: tomcat-custom
+  type: LoadBalancer

@@ -11,28 +11,28 @@ env:
   GKE_ZONE: us-central1  # cluster zone
 
 jobs:
-  Build_and_Publish_Docker:
-    runs-on: ubuntu-latest
-    needs: Terraform_GKE
-    defaults:
-      run:
-        working-directory: ./diplom
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@v3
-      - name: Cheking file
-        run: ls -la
+  # Build_and_Publish_Docker:
+  #   runs-on: ubuntu-latest
+  #   needs: Terraform_GKE
+  #   defaults:
+  #     run:
+  #       working-directory: ./diplom
+  #   timeout-minutes: 3
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Cheking file
+  #       run: ls -la
       
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_TEST }}
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKER_TEST }}
     
-      - name: Build and push Docker image
-        run: | 
-          docker build -t vedenindenis/diplom_web:latest .
-          docker push vedenindenis/diplom_web:latest
+  #     - name: Build and push Docker image
+  #       run: | 
+  #         docker build -t vedenindenis/diplom_web:latest .
+  #         docker push vedenindenis/diplom_web:latest
 
 
 
@@ -60,8 +60,11 @@ jobs:
 
   K8S:
     runs-on: ubuntu-latest
-    needs: [Terraform_GKE, Build_and_Publish_Docker]
-    timeout-minutes: 5
+    needs: [Terraform_GKE]
+    defaults:
+      run:
+        working-directory: ./diplom/.k8s
+    timeout-minutes: 10
     steps:
 
       - name: code checkout
@@ -79,4 +82,17 @@ jobs:
           location: ${{ env.GKE_ZONE }}
 
       - name: Deploy
-        run: kubectl get nodes
+        run: |
+          kubectl get nodes
+          kubectl apply -f 1-nginx_deploy.yaml
+          kubectl apply -f 2-tomcat_deploy.yaml
+
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '2m' # for 1 minute
+
+      - name: Test service and pods
+        run: |
+          kubectl get nodes
+          kubectl get services
+          kubectl get pods -o wide 
