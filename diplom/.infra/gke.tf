@@ -23,7 +23,7 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = "${var.project_id}-gke"
+  name     = "${var.project_id}-gke-test"
   location = var.region
 
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -62,7 +62,7 @@ resource "google_container_node_pool" "primary_nodes" {
     # preemptible  = true
     machine_type = "n1-standard-1"
     disk_size_gb = 20
-    tags         = ["gke-node", "${var.project_id}-gke"]
+    tags         = ["gke-node", "${var.project_id}-gke-test"]
     metadata = {
       disable-legacy-endpoints = "true"
     }
