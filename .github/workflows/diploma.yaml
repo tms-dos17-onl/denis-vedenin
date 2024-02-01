@@ -31,8 +31,8 @@ jobs:
     
       - name: Build and push Docker image
         run: | 
-          docker build -t vedenindenis/diplom_web:latest .
-          docker push vedenindenis/diplom_web:latest
+          docker build -t vedenindenis/diplom_web:${{github.run_number}} .
+          docker push vedenindenis/diplom_web:${{github.run_number}}
 
 
 
