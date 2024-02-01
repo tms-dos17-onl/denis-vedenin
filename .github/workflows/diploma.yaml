@@ -13,7 +13,7 @@ env:
 jobs:
   Build_and_Publish_Docker:
     runs-on: ubuntu-latest
-    needs: Terraform_GKE
+    # needs: Terraform_GKE
     defaults:
       run:
         working-directory: ./diplom
