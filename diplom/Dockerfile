@@ -6,6 +6,7 @@ COPY . /app/
 
 RUN pip install -r requirements.txt 
 RUN sleep 60
-RUN python manage.py migrate
+# RUN python manage.py migrate
 
-CMD ["python", "manage.py", "runserver"]
+CMD ["python", "manage.py", "migrate"]
+ENTRYPOINT ["python", "manage.py", "runserver"]
