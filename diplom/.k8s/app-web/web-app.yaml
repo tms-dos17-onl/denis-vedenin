@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace        : ingress-nginx
+  creationTimestamp: null
+  labels:
+    app: webapp
+  name: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app      : webapp
+        container: webapp-custom
+    spec:
+      containers:
+        - image          : "vedenindenis/diplom_web:79"
+          name           : webapp-container
+          imagePullPolicy: Always
+          resources      : {}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: POSTGRES_HOST
+              value: "db"
+            - name: POSTGRES_PORT
+              value:  "5432"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "postgres"
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ingress-nginx
+  name     : webapp
+  labels:
+    run: webapp
+spec:
+  ports:
+    - name      : http
+      protocol  : TCP
+      port      : 8000
+      targetPort: 8000
+  selector:
+    app      : webapp
+    container: webapp-custom
+  type: "LoadBalancer"

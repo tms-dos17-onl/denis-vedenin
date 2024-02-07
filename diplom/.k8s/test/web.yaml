@@ -1,0 +1,182 @@
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-config"
+  namespace: "default"
+  labels:
+    app: "postgres"
+data:
+  API_KEY: "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"
+  SECRET_KEY: "(qorz617zf_e*atshs$+e63wd1!)+&w&%i*6#!n@)@yj22y=S"
+
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST: db
+
+
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "postgres"
+  namespace: "default"
+  labels:
+    app: "postgres"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "postgres"
+  template:
+    metadata:
+      labels:
+        app: "postgres"
+    spec:
+      containers:
+      - name: "postgres"
+        image: "postgres:13.13"
+        env:
+        - name: "POSTGRES_DB"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_DB"
+              name: "postgres-config"
+        - name: "POSTGRES_USER"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_USER"
+              name: "postgres-config"
+        - name: "POSTGRES_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_PASSWORD"
+              name: "postgres-config"
+        - name: "POSTGRES_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_HOST"
+              name: "postgres-config"
+        - name: "API_KEY"
+          valueFrom:
+            configMapKeyRef:
+              key: "API_KEY"
+              name: "postgres-config"
+        - name: "SECRET_KEY"
+          valueFrom:
+            configMapKeyRef:
+              key: "SECRET_KEY"
+              name: "postgres-config"
+        ports:
+          - containerPort: 5432
+            name: postgres
+        volumeMounts:
+          - name: postgres-storage
+            mountPath: /var/lib/postgresql/db-data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: "postgres"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  ports:
+    - protocol: "TCP"
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+  type: "ClusterIP"
+
+---
+
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "app"
+  namespace: "default"
+  labels:
+    app: "app"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "app"
+  template:
+    metadata:
+      labels:
+        app: "app"
+    spec:
+      containers:
+        - name: "app"
+          image: "vedenindenis/diplom_web:79"
+          ports:
+          - name: default-app-svc
+            containerPort: 8000
+          env:
+            - name: POSTGRES_HOST
+              value: "db"
+            - name: POSTGRES_PORT
+              value:  "5432"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "postgres"
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "app-service"
+  namespace: "default"
+  labels:
+    app: "app"
+    run: "app"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 8000
+    targetPort: 8000
+  selector:
+    app: "app"
+    container: "app"
+  type: "LoadBalancer"
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "app-service-test"
+  namespace: "default"
+  labels:
+    app: "app"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 8000
+    targetPort: 8000
+  selector:
+    app: "app"
+    container: "app"
+  type: "NodePort"
