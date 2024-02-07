@@ -9,5 +9,5 @@ RUN sleep 60
 RUN chmod +x runapp.sh
 
 EXPOSE 8000
-
-CMD ["/bin/bash", "runapp.sh"]
+CMD ["/bin/bash", "python", "manage.py", "migrate", "&&", "python", "manage.py","runserver 0.0.0.0:8000" ]
+# CMD ["/bin/bash", "runapp.sh"]

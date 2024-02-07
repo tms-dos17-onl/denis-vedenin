@@ -30,7 +30,7 @@ resource "google_container_cluster" "primary" {
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
   remove_default_node_pool = true
-  initial_node_count       = 1
+  initial_node_count       = var.gke_num_nodes
   node_config {
     machine_type = "e2-medium"
     disk_size_gb = 15
