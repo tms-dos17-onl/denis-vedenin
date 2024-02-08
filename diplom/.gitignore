@@ -857,10 +857,10 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/python,django,venv,pycharm,vs,visualstudio,visualstudiocode,direnv,dotenv,virtualenv
 
 
-static/
-static/*
-static
+# static/
+# static/*
+# static
 
-media
-media/
-media/*
+# media
+# media/
+# media/*
