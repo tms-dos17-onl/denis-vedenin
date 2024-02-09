@@ -1,9 +1,0 @@
----
-  apiVersion: networking.gke.io/v1
-  kind: ManagedCertificate
-  metadata:
-    namespace: ingress-nginx
-    name: meneged-cert
-  spec:
-    domains:
-      - demochin.in

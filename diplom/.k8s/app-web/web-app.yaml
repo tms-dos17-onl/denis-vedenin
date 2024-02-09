@@ -21,7 +21,7 @@ spec:
         container: webapp-custom
     spec:
       containers:
-        - image          : "vedenindenis/diplom_web:79"
+        - image          : "vedenindenis/diplom_web:86"
           name           : webapp-container
           imagePullPolicy: Always
           resources      : {}
@@ -58,4 +58,4 @@ spec:
   selector:
     app      : webapp
     container: webapp-custom
-  type: "LoadBalancer"
+  type: "NodePort" #"LoadBalancer"

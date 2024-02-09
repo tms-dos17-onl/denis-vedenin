@@ -13,7 +13,7 @@ env:
 jobs:
   Build_and_Publish_Docker:
     runs-on: ubuntu-latest
-    # needs: Terraform_GKE
+    needs: Terraform_GKE
     defaults:
       run:
         working-directory: ./diplom
@@ -36,64 +36,71 @@ jobs:
 
 
 
-  # Terraform_GKE:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./diplom/.infra
-  #   timeout-minutes: 20
-  #   steps:
-  #     - uses: actions/checkout@v3
+  Terraform_GKE:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./diplom/.infra
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Terraform Format
-  #       id: fmt
-  #       run: terraform fmt -check
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
 
-  #     - name: Terraform init
-  #       run: terraform init
+      - name: Terraform init
+        run: terraform init
 
-  #     - name: Terraform plan
-  #       run: terraform plan
+      - name: Terraform plan
+        run: terraform plan
 
-  #     - name: Terraform aplly
-  #       run: terraform apply -auto-approve
+      - name: Terraform aplly
+        run: terraform apply -auto-approve
 
-  # K8S:
-  #   runs-on: ubuntu-latest
-  #   # needs: [Terraform_GKE]
-  #   defaults:
-  #     run:
-  #       working-directory: ./diplom/.k8s
-  #   timeout-minutes: 10
-  #   steps:
+  K8S:
+    runs-on: ubuntu-latest
+    needs: [Terraform_GKE, Build_and_Publish_Docker]
+    defaults:
+      run:
+        working-directory: ./diplom/.k8s
+    timeout-minutes: 10
+    steps:
 
-  #     - name: code checkout
-  #       uses: actions/checkout@v2
+      - name: code checkout
+        uses: actions/checkout@v2
 
-  #     - id: 'auth'
-  #       uses: 'google-github-actions/auth@v2'
-  #       with:
-  #         credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-  #     - name: Set up GKE credentials
-  #       uses: google-github-actions/get-gke-credentials@v2
-  #       with:
-  #         cluster_name: ${{ env.GKE_CLUSTER }}
-  #         location: ${{ env.GKE_ZONE }}
+      - name: Set up GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
 
-  #     - name: Deploy
-  #       run: |
-  #         kubectl get nodes
-  #         kubectl apply -f 3-namespace.yaml
-  #         kubectl apply -f 1-nginx_deploy.yaml
-  #         kubectl apply -f 2-tomcat_deploy.yaml
+      - name: Install BD 
+        run: |
+          kubectl apply -f ./inController/ingress.yaml
 
-  #     - uses: GuillaumeFalourd/wait-sleep-action@v1
-  #       with:
-  #         time: '1m' # for 1 minute
+      - name: Install BD 
+        run: |
+          kubectl apply -f ./db-web/postgres.yaml
 
-  #     - name: Test service and pods
-  #       run: |
-  #         kubectl get nodes
-  #         kubectl get services
-  #         kubectl get pods -o wide 
+      - name: Sleep 1 minutes for up BD
+        uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '1m' # for 1 minute
+      
+      - name: Install Web Application 
+        run: |
+          kubectl apply -f ./app-web/web-app.yaml
+
+      - name: Test service and pods
+        run: |
+          kubectl get nodes
+          kubectl get services -o wide -n ingress-nginx
+          kubectl get pods -o wide -n ingress-nginx
+          kubectl get ingress -n ingress-nginx

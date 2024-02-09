@@ -1,3 +1,27 @@
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   namespace: ingress-nginx
+#   name: minimal-ingress
+#   annotations:
+#     networking.gke.io/managed-certificates: "diplomchik.net"
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#   - host: diplomchik.net
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: webapp
+#             port:
+#               number: 8000
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -5,12 +29,12 @@ metadata:
   namespace: ingress-nginx
   name: minimal-ingress
   annotations:
-    networking.gke.io/managed-certificates: "demochin.in"
+    networking.gke.io/managed-certificates: "diplomchik.net"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: demochin.in
+  - host: diplomchik.net
     http:
       paths:
       - path: /
@@ -19,5 +43,4 @@ spec:
           service:
             name: webapp
             port:
-
               number: 8000
