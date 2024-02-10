@@ -23,7 +23,7 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = "${var.project_id}-master"
+  name     = "${var.project_id}-cluster"
   location = var.region
 
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -42,7 +42,7 @@ resource "google_container_cluster" "primary" {
 
 # Separately Managed Node Pool
 resource "google_container_node_pool" "primary_nodes" {
-  name     = "${var.project_id}-slave"
+  name     = google_container_cluster.primary.name
   location = var.region
   cluster  = google_container_cluster.primary.name
 
