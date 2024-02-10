@@ -32,8 +32,8 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = var.gke_num_nodes
   node_config {
-    machine_type = "e2-medium"
-    disk_size_gb = 15
+    machine_type = "e2-standard-2"
+    disk_size_gb = 30
   }
 
   network    = google_compute_network.vpc.name
