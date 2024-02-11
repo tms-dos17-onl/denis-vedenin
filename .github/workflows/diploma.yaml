@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: my-project-kubernetes-409711-cluster    # cluster name
-  GKE_ZONE: europe-west10  # cluster zone
+  GKE_ZONE: europe-west1  # cluster zone
 
 jobs: 
   Build_and_Publish_Docker:
