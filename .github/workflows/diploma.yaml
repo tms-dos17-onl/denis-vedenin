@@ -87,7 +87,7 @@ jobs:
           helm install stable prometheus-community/kube-prometheus-stack -n prometheus
           kubectl get pods -n prometheus
           kubectl get svc -n prometheus
-          kubectl patch svc stable-kube-prometheus-sta-prometheus -n prometheus -p '{"spec": {"type": "LoadBalancer"}}'
+          kubectl patch svc stable-kube-prometheus-sta-prometheus -n prometheus -p '{"spec": {"type": "NodePort"}}'
           kubectl patch svc stable-grafana -n prometheus -p '{"spec": {"type": "LoadBalancer"}}'
           kubectl get pods -n prometheus
           kubectl get svc -n prometheus
