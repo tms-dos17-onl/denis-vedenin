@@ -8,32 +8,9 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: my-project-kubernetes-409711-cluster    # cluster name
-  GKE_ZONE: europe-west1  # cluster zone
+  GKE_ZONE: europe-west9  # cluster zone
 
 jobs: 
-  Build_and_Publish_Docker:
-    runs-on: ubuntu-latest
-    needs: Terraform_GKE
-    defaults:
-      run:
-        working-directory: ./diplom
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@v3
-      - name: Cheking file
-        run: ls -la
-      
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_TEST }}
-    
-      - name: Build and push Docker image
-        run: | 
-          docker build -t vedenindenis/diplom_web:${{github.run_number}} .
-          docker push vedenindenis/diplom_web:${{github.run_number}}
-
   Terraform_GKE:
     runs-on: ubuntu-latest
     defaults:
@@ -55,6 +32,29 @@ jobs:
 
       - name: Terraform aplly
         run: terraform apply -auto-approve
+
+  Build_and_Publish_Docker:
+    runs-on: ubuntu-latest
+    needs: Terraform_GKE
+    defaults:
+      run:
+        working-directory: ./diplom
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cheking file
+        run: ls -la
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKER_TEST }}
+    
+      - name: Build and push Docker image
+        run: | 
+          docker build -t vedenindenis/diplom_web:${{github.run_number}} .
+          docker push vedenindenis/diplom_web:${{github.run_number}}
 
   Prometheus_and_Grafana:
     runs-on: ubuntu-latest
@@ -94,48 +94,46 @@ jobs:
           echo "Name:admin"
           echo "Password:prom-operator"
 
-  EFK:
-    runs-on: ubuntu-latest
-    needs: [Terraform_GKE, Prometheus_and_Grafana]
-    defaults:
-      run:
-        working-directory: ./diplom
-    timeout-minutes: 15
-    steps:
+  # EFK:
+  #   runs-on: ubuntu-latest
+  #   needs: [Terraform_GKE, Prometheus_and_Grafana]
+  #   defaults:
+  #     run:
+  #       working-directory: ./diplom
+  #   timeout-minutes: 15
+  #   steps:
 
-      - name: code checkout
-        uses: actions/checkout@v2
+  #     - name: code checkout
+  #       uses: actions/checkout@v2
 
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+  #     - id: 'auth'
+  #       uses: 'google-github-actions/auth@v2'
+  #       with:
+  #         credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Set up GKE credentials
-        uses: google-github-actions/get-gke-credentials@v2
-        with:
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_ZONE }}
+  #     - name: Set up GKE credentials
+  #       uses: google-github-actions/get-gke-credentials@v2
+  #       with:
+  #         cluster_name: ${{ env.GKE_CLUSTER }}
+  #         location: ${{ env.GKE_ZONE }}
 
-      - name: Install elasticsearch
-        run: |
-          helm repo add elastic https://helm.elastic.co
-          kubectl create ns efk
-          helm install elasticsearch --set service.type=LoadBalancer --set replicas=2 --set persistence.labels.enabled=true elastic/elasticsearch -n efk
+  #     - name: Install elasticsearch
+  #       run: |
+  #         helm repo add elastic https://helm.elastic.co
+  #         kubectl create ns efk
+  #         helm install elasticsearch --set service.type=LoadBalancer --set replicas=2 --set persistence.labels.enabled=true elastic/elasticsearch -n efk
       
-      - name: Username and Password
-        run: |
-          kubectl get pods -n efk -l app=elasicsearch-master 
-          kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.password | base64decode }}"
-          kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.username | base64decode }}"
+  #     - name: Username and Password
+  #       run: |
+  #         kubectl get pods -n efk -l app=elasicsearch-master 
+  #         kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.password | base64decode }}"
+  #         kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.username | base64decode }}"
 
-      - name: Install kibana
-        run: |
-          helm install kibana --set service.type=LoadBalancer elastic/kibana -n efk
-          kubectl get pods -n efk
-          kubectl get svc -n efk
-
-
+  #     - name: Install kibana
+  #       run: |
+  #         helm install kibana --set service.type=LoadBalancer elastic/kibana -n efk
+  #         kubectl get pods -n efk
+  #         kubectl get svc -n efk
 
   K8S:
     runs-on: ubuntu-latest
@@ -169,7 +167,7 @@ jobs:
       - name: Sleep 1 minutes for up BD
         uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
-          time: '30' # for 1 minute
+          time: '60' # for 1 minute
       
       - name: Install Web Application 
         run: kubectl apply -f ./app-web/web-app.yaml
@@ -183,29 +181,3 @@ jobs:
           kubectl get services -o wide -n ingress-nginx
           kubectl get pods -o wide -n ingress-nginx
           kubectl get ingress -n ingress-nginx
-
-  TEST: 
-    runs-on: ubuntu-latest
-    needs: [Terraform_GKE, Build_and_Publish_Docker, K8S]
-    defaults:
-      run:
-        working-directory: ./diplom
-    timeout-minutes: 5
-    steps:
-
-      - name: code checkout
-        uses: actions/checkout@v2
-
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-
-      - name: Set up GKE credentials
-        uses: google-github-actions/get-gke-credentials@v2
-        with:
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_ZONE }}
-
-      - name: Test my website with curl
-        run: curl -v diplomchick.net
