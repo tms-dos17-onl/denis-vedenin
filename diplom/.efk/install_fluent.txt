@@ -1,0 +1,19 @@
+helm repo add elastic https://helm.elastic.co
+kubectl create ns efk
+helm install elasticsearch --set service.type=LoadBalancer --set replicas=2 --set persistence.labels.enabled=true elastic/elasticsearch -n efk
+
+kubectl get pods -n efk -l app=elasicsearch-master 
+kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.password | base64decode }}"
+kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.username | base64decode }}"
+
+kibana
+helm install kibana --set service.type=LoadBalancer elastic/kibana -n efk
+kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.password | base64decode }}"
+kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.username | base64decode }}"
+kubectl get svc -n efk
+
+fluent-bit
+helm install fluent-bit fluent/fluent-bit -f fluentbit-values.yaml -n efk
+kubectl -n efk get pods -o wide
+
+kubernetes.pod_name : "name-pod"

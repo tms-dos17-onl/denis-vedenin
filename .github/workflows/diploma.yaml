@@ -135,16 +135,11 @@ jobs:
           kubectl get pods -n efk
           kubectl get svc -n efk
 
-      - name: Install fluent-bit
-        run: |
-          echo Password.txt 
-          helm install fluent-bit fluent/fluent-bit -f fluentbit-values.yaml -n efk
-          kubectl -n efk get pods -o wide
 
 
   K8S:
     runs-on: ubuntu-latest
-    needs: [Terraform_GKE, Build_and_Publish_Docker, Prometheus_and_Grafana, EFK]
+    needs: [Terraform_GKE, Build_and_Publish_Docker]
     defaults:
       run:
         working-directory: ./diplom/.k8s
@@ -188,3 +183,29 @@ jobs:
           kubectl get services -o wide -n ingress-nginx
           kubectl get pods -o wide -n ingress-nginx
           kubectl get ingress -n ingress-nginx
+
+  TEST: 
+    runs-on: ubuntu-latest
+    needs: [Terraform_GKE, Build_and_Publish_Docker, K8S, Prometheus_and_Grafana, EFK]
+    defaults:
+      run:
+        working-directory: ./diplom
+    timeout-minutes: 5
+    steps:
+
+      - name: code checkout
+        uses: actions/checkout@v2
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+
+      - name: Test my website with curl
+        run: curl -v diplomchick.net
