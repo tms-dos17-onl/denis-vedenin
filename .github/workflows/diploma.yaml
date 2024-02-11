@@ -99,8 +99,8 @@ jobs:
     needs: [Terraform_GKE, Prometheus_and_Grafana]
     defaults:
       run:
-        working-directory: ./diplom/.efk
-    timeout-minutes: 10
+        working-directory: ./diplom
+    timeout-minutes: 15
     steps:
 
       - name: code checkout
@@ -126,7 +126,7 @@ jobs:
       - name: Username and Password
         run: |
           kubectl get pods -n efk -l app=elasicsearch-master 
-          kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.password | base64decode }}" > Password.txt
+          kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.password | base64decode }}"
           kubectl get secrets -n efk elasticsearch-master-credentials --template "{{ .data.username | base64decode }}"
 
       - name: Install kibana
@@ -186,7 +186,7 @@ jobs:
 
   TEST: 
     runs-on: ubuntu-latest
-    needs: [Terraform_GKE, Build_and_Publish_Docker, K8S, Prometheus_and_Grafana, EFK]
+    needs: [Terraform_GKE, Build_and_Publish_Docker, K8S]
     defaults:
       run:
         working-directory: ./diplom
