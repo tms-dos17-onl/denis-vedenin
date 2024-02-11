@@ -32,7 +32,7 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = var.gke_num_nodes
   node_config {
-    machine_type = "e2-standard-2"
+    machine_type = "e2-standard-4"
     disk_size_gb = 30
   }
 
@@ -60,7 +60,7 @@ resource "google_container_node_pool" "primary_nodes" {
     }
 
     # preemptible  = true
-    machine_type = "e2-standard-2"
+    machine_type = "e2-standard-4"
     disk_size_gb = 30
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
