@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Распространенная запись</h1>
+  <h1>Поширений запис</h1>
 
-  <p>ID запись: {{ record.id }}</p>
-  <p>Вопрос: {{ record.question }}</p>
-  <p>Ответ на код: {{ record.code_answer }}</p>
-  <p>Язык программирования: {{ record.language }}</p>
+  <p>ID запису: {{ record.id }}</p>
+  <p>Запитання: {{ record.question }}</p>
+  <p>Відповідь на код: {{ record.code_answer }}</p>
+  <p>Мова програмування: {{ record.language }}</p>
 
-  <h2>Ссылка на распространение</h2>
-  <p>Поделитесь этой ссылкой с другими:</p>
-  <p><a href="{{ share_url }}">Перейти к распространённой записи</a></p>
+  <h2>Посилання для поширення</h2>
+  <p>Поділіться цим посиланням з іншими:</p>
+  <p><a href="{{ share_url }}">Перейти до поширеного запису</a></p>
 
-  <button onclick="copyToClipboard('{{ share_url }}')">Копировать ссылку</button>
+  <button onclick="copyToClipboard('{{ share_url }}')">Копіювати посилання</button>
 
   <script>
     function copyToClipboard(text) {
@@ -22,7 +22,7 @@
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      alert('Ссылка скопирована в буфер обмена!');
+      alert('Посилання скопійовано до буфера обміну!');
     }
   </script>
 {% endblock %}

@@ -13,25 +13,25 @@
 </pre>
 <br/><br/>
 
-<a href="{{ share_url }}">Перейти к распространённой записи</a>
+<a href="{{ share_url }}">Перейти до поширеного запису</a>
 <br/><br/>
 
 <form method=POST action="{% url 'suggest' %}">
     {% csrf_token %}
 
 <div class="mb-3">
-  <textarea class="form-control" name="code" placeholder="Дополнить код." rows="3">{{ code }}</textarea>
+  <textarea class="form-control" name="code" placeholder="Доповнити код." rows="3">{{ code }}</textarea>
 </div>
 
 <select class="form-select" name="lang">
-  <option selected>Выбрать язык программирования</option>
+  <option selected>Вибрати мову програмування</option>
     {% for lang in lang_list %}
   <option value="{{ lang }}">{{ lang }}</option>
     {% endfor %}
 </select>
 <br/><br/>
 
-     <button type="submit" class="btn btn-primary-secondary">Отправить</button>
+     <button type="submit" class="btn btn-primary-secondary">Відправити</button>
 
 </form>
 
@@ -60,18 +60,18 @@ unsigned long long factorial(unsigned int n) {
     {% csrf_token %}
 
 <div class="mb-3">
-  <textarea class="form-control" name="code" placeholder="Дополнить код." rows="3"></textarea>
+  <textarea class="form-control" name="code" placeholder="Доповнити код." rows="3"></textarea>
 </div>
 
 <select class="form-select" name="lang">
-  <option selected>Выбрать язык программирования</option>
+  <option selected>Вибрати мову програмування</option>
     {% for lang in lang_list %}
   <option value="{{ lang }}">{{ lang }}</option>
     {% endfor %}
 </select>
 <br/><br/>
 
-     <button type="submit" class="btn btn-primary-secondary">Отправить</button>
+     <button type="submit" class="btn btn-primary-secondary">Відправити</button>
 
 </form>
 {% endif %}
@@ -93,7 +93,7 @@ unsigned long long factorial(unsigned int n) {
         </div>
         <br/>
 
-        <button type="submit" class="btn btn-secondary">Войти</button>
+        <button type="submit" class="btn btn-secondary">Увійти</button>
     </form>
 </div>
 
