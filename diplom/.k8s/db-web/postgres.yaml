@@ -7,7 +7,7 @@ metadata:
   labels:
     app: "postgres"
 data:
-  API_KEY: "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"
+  API_KEY: "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"
   SECRET_KEY: "ffl@q714d-eewzyh4-e8wuzdxz+ey5_=673qky=zujv#hdy#1s"
 
   POSTGRES_DB: postgres
