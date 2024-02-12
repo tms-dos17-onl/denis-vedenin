@@ -2,7 +2,7 @@
 {% block content %}
 
 {% if code %}
-<a href="{% url 'delete_all_past' %}" class="btn btn-danger">Видалити всю історію</a>
+<a href="{% url 'delete_all_past' %}" class="btn btn-danger">Удалить всю историю</a>
 <br/><br/><br/><br/>
 	{% for thing in code %}
 
@@ -14,7 +14,7 @@
 
 </code>
 </pre>
-<a href="{% url 'delete_past' thing.id %}" class='btn btn-outline-secondary btn-sm'>Видалити</a>
+<a href="{% url 'delete_past' thing.id %}" class='btn btn-outline-secondary btn-sm'>Удалить</a>
 
 
 <br/><br/><br/><br/>
