@@ -21,7 +21,7 @@ spec:
         container: webapp-custom
     spec:
       containers:
-        - image          : "vedenindenis/diplom_web:86"
+        - image          : "vedenindenis/diplom_web:99"
           name           : webapp-container
           imagePullPolicy: Always
           resources      : {}
