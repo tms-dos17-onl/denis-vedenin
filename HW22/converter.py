@@ -6,6 +6,7 @@ import xmltodict
 import yaml
 import sys
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='converter')
     parser.add_argument("--infile", help="file name",
